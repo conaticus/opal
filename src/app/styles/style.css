@@ -1,0 +1,16 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+main {
+    display: flex;
+}
+
+.sidebar {
+    width: 300px;
+    background-color: black;
+    color: white;
+    height: 100vh;
+}
