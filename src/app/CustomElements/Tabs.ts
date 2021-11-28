@@ -1,19 +1,21 @@
+import CustomElement from "./CustomElement";
+
 interface TabsObject {
     [key: string]: {
         button: HTMLButtonElement;
         element: HTMLElement;
+        defaultElement: HTMLElement;
     };
 }
 
-export default class Tabs {
-    public element: HTMLDivElement;
+export default class Tabs extends CustomElement {
     private buttonsContainer: HTMLDivElement;
     private childElementContainer: HTMLDivElement;
     private tabs: TabsObject;
     private currentTabSet: boolean;
 
     constructor() {
-        this.element = document.createElement("div");
+        super();
         this.element.className = "tabs";
 
         this.buttonsContainer = document.createElement("div");
@@ -28,7 +30,7 @@ export default class Tabs {
         this.currentTabSet = false;
     }
 
-    public addTab(name: string, childElement: HTMLElement): void {
+    public addTab(name: string, defaultElement: HTMLElement): void {
         if (this.tabs[name]) {
             console.error(`Tab '${name}' already exists.`);
             return;
@@ -39,12 +41,13 @@ export default class Tabs {
         this.buttonsContainer.appendChild(button);
 
 
-        childElement.style.display = "none";
-        this.childElementContainer.appendChild(childElement);
-
+        defaultElement.style.display = "none";
+        
+        this.childElementContainer.appendChild(defaultElement);
         this.tabs[name] = {
             button,
-            element: childElement,
+            element: defaultElement,
+            defaultElement,
         };
 
         if (!this.currentTabSet) {
@@ -55,6 +58,21 @@ export default class Tabs {
         button.addEventListener("click", () => {
             this.setCurrentTab(name);
         })
+    }
+
+    public setChildElement(tabName: string, element: HTMLElement): void {
+        this.childElementContainer.childNodes.forEach(child => {
+            if (child === this.tabs[tabName].element)
+                child.remove();
+        })
+
+        this.childElementContainer.appendChild(element);
+        this.tabs[tabName].element = element;
+    }
+
+    public setChildDefault(tabName: string) {
+        const tab = this.tabs[tabName];
+        this.setChildElement(tabName, tab.defaultElement);
     }
 
     public setCurrentTab(name: string): void {

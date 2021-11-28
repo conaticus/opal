@@ -1,15 +1,17 @@
 import Tabs from "../CustomElements/Tabs";
+import WidgetPreview from "../CustomElements/WidgetPreview";
+import { WidgetType } from "../types";
 import appendCustomElement from "../util/appendCustomElement";
 
 const sidebar = document.getElementById("sidebar");
 const tabs = new Tabs();
 
-const textWidget = document.createElement("h1");
-textWidget.innerText = "Text";
-tabs.addTab("Widgets", textWidget);
+tabs.addTab("Widgets", new WidgetPreview("Text", WidgetType.TEXT).element);
 
-const inspectorHeading = document.createElement("h1");
-inspectorHeading.innerText = "Welcome to the inspector";
-tabs.addTab("Inspector", inspectorHeading);
+const inspectorDefaultChild = document.createElement("p");
+inspectorDefaultChild.innerText = "No widget is selected.";
+tabs.addTab("Inspector", inspectorDefaultChild);
 
 appendCustomElement(sidebar, tabs);
+
+export { tabs };

@@ -5,7 +5,8 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
 var createWindow = function () {
     var window = new electron_1.BrowserWindow({
         width: 800,
-        height: 600
+        height: 600,
+        autoHideMenuBar: true
     });
     window.loadFile("../../app/index.html");
 };
