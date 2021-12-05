@@ -15,7 +15,7 @@ export default class WidgetContainer extends CustomElement {
         this.element.addEventListener("dragover", (e) => {
             if (this.occupied) return;
             e.preventDefault(); 
-        }); // allow drop
+        });
 
         this.element.addEventListener("drop", (e) => {
             e.preventDefault();

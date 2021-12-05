@@ -4,12 +4,24 @@ export enum WidgetType {
 
 export enum WidgetPropertyType {
     TEXT_SHORT,
+    CHOICE,
+}
+
+export interface WidgetPropertyChoice {
+    currentChoice?: string;
+    choiceEnum: any;
+}
+
+export interface WidgetProperty<ValueType> {
+    value: ValueType;
+    handleInspectorChange?: Function;
 }
 
 export interface WidgetProperties {
-    [key: string]: any;
+    [key: string]: WidgetProperty<any>;
 }
 
 export interface TextWidgetProperties extends WidgetProperties {
-    text: string;
+    text: WidgetProperty<string>;
+    type: WidgetProperty<WidgetPropertyChoice>;
 }

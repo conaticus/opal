@@ -25,3 +25,31 @@
     outline: none;
     background: none;
 }
+
+.text-widget-h1 {
+    font-size: 60px;
+}
+
+.text-widget-h2 {
+    font-size: 50px;
+}
+
+.text-widget-h3 {
+    font-size: 45px;
+}
+
+.text-widget-h4 {
+    font-size: 40px;
+}
+
+.text-widget-h5 {
+    font-size: 35px;
+}
+
+.text-widget-h6 {
+    font-size: 30px;
+}
+
+.text-widget-p {
+    font-size: 18px;
+}

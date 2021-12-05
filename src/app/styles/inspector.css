@@ -1,0 +1,8 @@
+.widget-inspector {
+    margin: auto;
+}
+
+.widget-inspector textarea {
+    resize: none;
+    outline: none;
+}

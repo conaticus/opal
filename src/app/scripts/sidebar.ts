@@ -4,6 +4,7 @@ import { WidgetType } from "../types";
 import appendCustomElement from "../util/appendCustomElement";
 
 const sidebar = document.getElementById("sidebar");
+
 const tabs = new Tabs();
 
 tabs.addTab("Widgets", new WidgetPreview("Text", WidgetType.TEXT).element);

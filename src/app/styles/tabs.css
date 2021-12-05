@@ -1,9 +1,15 @@
+.tabs {
+    width: 300px;
+    margin: auto;
+}
+
 .tabs .buttons-container {
     display: flex;
 }
 
 .tabs .child-element-container {
     padding: 20px;
+    width: 100%;
 }
 
 .tabs button {
