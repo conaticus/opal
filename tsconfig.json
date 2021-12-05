@@ -5,6 +5,6 @@
     "noImplicitAny": true,
     "module": "es6",
     "allowJs": true,
-    "moduleResolution": "node"
+    "moduleResolution": "node",
   }
 }

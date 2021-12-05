@@ -6,7 +6,7 @@
   "scripts": {
     "start": "webpack && electron ./src/electron/build/main.js",
     "start-full": "npm run compile-electron && npm start",
-    "compile-electron": "tsc ./src/electron/src/main.ts --outDir ./src/electron/build"
+    "compile-electron": "tsc ./src/electron/src/main.ts ./src/electron/src/preload.ts --outDir ./src/electron/build"
   },
   "keywords": [],
   "author": "",

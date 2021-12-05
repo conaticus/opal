@@ -1,14 +1,20 @@
 "use strict";
 exports.__esModule = true;
 var electron_1 = require("electron");
+var menu_1 = require("./menu");
+var path_1 = require("path");
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true';
+electron_1.nativeTheme.themeSource = "light";
+electron_1.Menu.setApplicationMenu(menu_1["default"]);
 var createWindow = function () {
-    var window = new electron_1.BrowserWindow({
+    var win = new electron_1.BrowserWindow({
         width: 800,
         height: 600,
-        autoHideMenuBar: true
+        webPreferences: {
+            preload: (0, path_1.join)(__dirname, "./preload.js")
+        }
     });
-    window.loadFile("../../app/index.html");
+    win.loadFile("../../app/pages/menu/index.html");
 };
 electron_1.app.once("ready", function () {
     createWindow();

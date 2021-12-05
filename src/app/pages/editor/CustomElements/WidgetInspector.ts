@@ -1,8 +1,8 @@
 import CustomElement from "./CustomElement";
 import Widget from "./Widgets/Widget";
-import { TextWidgetProperties, WidgetProperty, WidgetPropertyChoice, WidgetPropertyType } from "../types";
 import TextWidget from "./Widgets/TextWidget";
 import handleInspectorChange from "../util/handleInspectorChange";
+import { WidgetProperty, WidgetPropertyChoice, WidgetPropertyType } from "../types";
 
 export default class WidgetInspector extends CustomElement {
     constructor(private widget: Widget) {
@@ -76,6 +76,7 @@ export default class WidgetInspector extends CustomElement {
         sliderElement.max = "100";
 
         const property = this.widget.properties[propertyName];
+        sliderElement.value = property.value;
 
         this.element.appendChild(sliderElement);
 

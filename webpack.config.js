@@ -2,7 +2,7 @@ const path = require("path");
 
 module.exports = {
   mode: "development",
-  entry: './src/app/index.ts',
+  entry: './src/app/pages/editor/index.ts',
   module: {
     rules: [
       {
@@ -17,6 +17,6 @@ module.exports = {
   },
   output: {
     filename: 'bundle.js',
-    path: path.resolve(__dirname, './src/app'),
+    path: path.resolve(__dirname, './src/app/pages/editor'),
   },
 };

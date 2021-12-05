@@ -1,3 +1,4 @@
+import { widgets } from "../globals";
 import { WidgetType } from "../types";
 import appendCustomElement from "../util/appendCustomElement";
 import CustomElement from "./CustomElement";
@@ -23,18 +24,22 @@ export default class WidgetContainer extends CustomElement {
             if (widgetType === undefined)
                 return;
 
-            switch (widgetType) {
-                case WidgetType.TEXT:
-                    this.addTextWidget();
-                    break;
-                default:
-                    return;
-            }
+            this.createWidget(widgetType);
         })
     }
 
-    private addTextWidget(): void {
-        const widget = new TextWidget();
+    private createWidget(widgetType: WidgetType): void {
+        let widget: Widget;
+
+        switch (widgetType) {
+            case WidgetType.TEXT:
+                widget = new TextWidget();
+                break;
+            default:
+                return;
+        }
+
+        widgets.push(widget);
         appendCustomElement(this.element, widget);
         this.dispatchWidgetCreate(widget);
         this.occupied = true;
