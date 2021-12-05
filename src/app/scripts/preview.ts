@@ -6,6 +6,7 @@ import { tabs } from "./sidebar";
 const preview = document.getElementById("preview");
 const widgetContainer = new WidgetContainer();
 appendCustomElement(preview, widgetContainer);
+
 widgetContainer.element.addEventListener("widget-create", (e: CustomEvent) => {
     const widgetInspector = new WidgetInspector(e.detail.widget);
 

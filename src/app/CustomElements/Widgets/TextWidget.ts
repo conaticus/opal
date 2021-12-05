@@ -1,4 +1,5 @@
 import { TextWidgetProperties, WidgetPropertyType } from "../../types";
+import pxToNumber from "../../util/pxToNumber";
 import Widget from "./Widget";
 
 enum TextType {
@@ -16,7 +17,7 @@ export default class TextWidget extends Widget {
     element: HTMLTextAreaElement;
 
     constructor() {
-        super("textarea", { text: WidgetPropertyType.TEXT_SHORT, type: WidgetPropertyType.CHOICE });
+        super("textarea", { text: WidgetPropertyType.TEXT_SHORT, type: WidgetPropertyType.CHOICE, size: WidgetPropertyType.SLIDER });
         this.element.className = "text-widget";
 
         this.initialiseProperties();
@@ -26,11 +27,13 @@ export default class TextWidget extends Widget {
 
         this.properties.text.handleInspectorChange = (value: string) => this.setText(value);
         this.properties.type.handleInspectorChange = (value: TextType) => this.setType(value);
+        this.properties.size.handleInspectorChange = (value: number) => this.element.style.fontSize = value + "px";
     }
 
     private initialiseProperties() {
         this.properties.type = { value: { choiceEnum: TextType } };
         this.properties.text = { value: "" };
+        this.properties.size = { value: pxToNumber(this.element.style.fontSize) };
     }
 
     public setText(value: string) {
@@ -40,7 +43,6 @@ export default class TextWidget extends Widget {
 
     public setType(value: TextType) {
         this.properties.type.value.currentChoice = value;
-
         switch (value) {
             case TextType.HEADING_ONE:
                 this.element.className = "text-widget text-widget-h1";

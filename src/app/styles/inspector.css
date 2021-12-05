@@ -1,5 +1,6 @@
-.widget-inspector {
-    margin: auto;
+.widget-inspector-input {
+    margin: 15px auto;
+    display: block;
 }
 
 .widget-inspector textarea {

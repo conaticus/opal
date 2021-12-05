@@ -19,6 +19,9 @@ export default class WidgetInspector extends CustomElement {
                 case WidgetPropertyType.CHOICE:
                     this.addChoice(propertyName);
                     break;
+                case WidgetPropertyType.SLIDER:
+                    this.addSlider(propertyName);
+                    break;
                 default: break;
             }
         }
@@ -26,6 +29,7 @@ export default class WidgetInspector extends CustomElement {
 
     private addTextShort(propertyName: string): void {
         const inputElement = document.createElement("textarea");
+        inputElement.className = "widget-inspector-input";
         this.element.appendChild(inputElement);
 
         const property = this.widget.properties[propertyName];
@@ -43,6 +47,8 @@ export default class WidgetInspector extends CustomElement {
 
     private addChoice(propertyName: string): void {
         const choiceElement = document.createElement("select");
+        choiceElement.className = "widget-inspector-input";
+
         const property = this.widget.properties[propertyName] as WidgetProperty<WidgetPropertyChoice>;
 
         for (const choiceKey in property.value.choiceEnum) {
@@ -59,6 +65,22 @@ export default class WidgetInspector extends CustomElement {
         
         choiceElement.addEventListener("input", () => {
             handleInspectorChange(property, choiceElement.value);
+        })
+    }
+
+    private addSlider(propertyName: string): void {
+        const sliderElement = document.createElement("input");
+        sliderElement.className = "widget-inspector-input";
+        sliderElement.type = "range";
+        sliderElement.min = "1";
+        sliderElement.max = "100";
+
+        const property = this.widget.properties[propertyName];
+
+        this.element.appendChild(sliderElement);
+
+        sliderElement.addEventListener("input", () => {
+            handleInspectorChange(property, sliderElement.value);
         })
     }
 }

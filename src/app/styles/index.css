@@ -10,13 +10,12 @@ main {
 }
 
 .sidebar {
-    width: 300px;
     background-color: black;
     color: white;
     height: 100vh;
+    flex: 20%;
 }
 
 .preview {
-    margin: 20px;
-    width: 100vw;
+    padding: 20px;
 }
