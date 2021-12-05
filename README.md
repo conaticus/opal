@@ -10,6 +10,14 @@ When creating a project the developer will be prompted for where they would like
 
 Opal interprets all configurations and scripts and generates optimised website code, ready for deployment.
 
+## Build instructions
+- Clone/pull the repository locally
+- Enter the main directory in terminal (the directory including the `README.md`)
+- `npm i` - install dependencies
+- `npx compile-electron` - compile the electron source code - run this when first installing and when updating the electron source code
+- `npm start` - start the application
+
+
 ## Widgets
 
 ### Description
