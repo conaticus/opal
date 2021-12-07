@@ -30,5 +30,5 @@ A widget that allows you to add text to your webpage.
 #### Properties
 
 **Type** - the type of text that you're adding - this mainly is here for SEO purposes. \
-**Text** - the text displayed by the widget
+**Text** - the text displayed by the widget \
 **Size** - size of the text (in pixels)
