@@ -1,16 +1,6 @@
-import { TextWidgetProperties, WidgetPropertyType } from "../../types";
+import { TextType, TextWidgetProperties, WidgetPropertyType } from "../../types";
 import pxToNumber from "../../util/pxToNumber";
 import Widget from "./Widget";
-
-enum TextType {
-    HEADING_ONE = "Heading One",
-    HEADING_TWO = "Heading Two",
-    HEADING_THREE = "Heading Three",
-    HEADING_FOUR = "Heading Four",
-    HEADING_FIVE = "Heading Five",
-    HEADING_SIX = "Heading Six",
-    PARAGRAPH = "Paragraph",
-}
 
 export default class TextWidget extends Widget {
     properties: TextWidgetProperties;
@@ -27,7 +17,10 @@ export default class TextWidget extends Widget {
 
         this.properties.text.handleInspectorChange = (value: string) => this.setText(value);
         this.properties.type.handleInspectorChange = (value: TextType) => this.setType(value);
-        this.properties.size.handleInspectorChange = (value: number) => this.element.style.fontSize = value + "px";
+        this.properties.size.handleInspectorChange = (value: number) => {
+            this.element.style.fontSize = value + "px";
+            this.properties.size.value = value;
+        }
     }
 
     private initialiseProperties() {

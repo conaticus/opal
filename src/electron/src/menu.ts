@@ -31,7 +31,10 @@ const menuTemplate: MenuItemConstructorOptions[] = [
             },
             {
                 label: "Preview Site",
-                accelerator: "Ctrl+P"
+                accelerator: "Ctrl+P",
+                click: () => {
+                    BrowserWindow.getFocusedWindow().webContents.send("preview-site");
+                }
             },
             {
                 label: "Settings",
