@@ -2,11 +2,14 @@ import { BrowserWindow, ipcMain, Menu, MenuItemConstructorOptions } from "electr
 
 const menuTemplate: MenuItemConstructorOptions[] = [
     {
-        label: "File",
+        label: "Project",
         submenu: [
             {
                 label: "New",
-                accelerator: "Ctrl+N"
+                accelerator: "Ctrl+N",
+                click: () => {
+                    BrowserWindow.getFocusedWindow().webContents.send("new-project");
+                }
             },
             {
                 label: "Save",
@@ -15,11 +18,6 @@ const menuTemplate: MenuItemConstructorOptions[] = [
                     BrowserWindow.getFocusedWindow().webContents.send("save");
                 }
             },
-        ]
-    },
-    {
-        label: "Project",
-        submenu: [
             {
                 label: "Build",
                 accelerator: "Ctrl+B"

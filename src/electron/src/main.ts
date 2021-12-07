@@ -1,6 +1,7 @@
 import { app, BrowserWindow, Menu, nativeTheme } from "electron";
 import menu from "./menu";
-import { join as pathJoin } from "path";
+import * as path from "path";
+import attatchIpcListeners from "./attachIpcListeners";
 
 process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 
@@ -12,11 +13,12 @@ const createWindow = () => {
         width: 800,
         height: 600,
         webPreferences: {
-            preload: pathJoin(__dirname, "./preload.js"),
+            preload: path.join(__dirname, "./preload.js"),
         },
     });
 
     win.loadFile("../../app/pages/menu/index.html");
+    attatchIpcListeners();
 }
 
 app.once("ready", () => {

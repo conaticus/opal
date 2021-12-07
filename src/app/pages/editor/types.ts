@@ -1,7 +1,11 @@
 import { IpcRenderer } from "electron";
+import * as filesystem from "fs/promises";
+
+export type { OpenDialogOptions } from "electron";
 
 declare global {
     const ipc: IpcRenderer;
+    const fs: typeof filesystem;
 }
 
 export enum WidgetType {
@@ -32,4 +36,9 @@ export interface TextWidgetProperties extends WidgetProperties {
     text: WidgetProperty<string>;
     type: WidgetProperty<WidgetPropertyChoice>;
     size: WidgetProperty<number>;
+}
+
+export interface ProjectInfo {
+    name: string;
+    isOpal?: boolean;
 }
