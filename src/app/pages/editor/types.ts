@@ -1,4 +1,4 @@
-import { IpcRenderer, Shell } from "electron";
+import { IpcRenderer } from "electron";
 import * as filesystem from "fs/promises";
 import { shell as sh } from "electron";
 
@@ -9,6 +9,7 @@ declare global {
     const fs: typeof filesystem;
     const shell: {
         openExternal: typeof sh.openExternal;
+        showItemInFolder: typeof sh.showItemInFolder;
     }
 }
 

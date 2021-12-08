@@ -1,4 +1,8 @@
-import { BrowserWindow, ipcMain, Menu, MenuItemConstructorOptions } from "electron";
+import { BrowserWindow, Menu, MenuItemConstructorOptions } from "electron";
+
+const focusedWindowSend = (channel: string) => {
+    BrowserWindow.getFocusedWindow().webContents.send(channel);
+}
 
 const menuTemplate: MenuItemConstructorOptions[] = [
     {
@@ -8,14 +12,14 @@ const menuTemplate: MenuItemConstructorOptions[] = [
                 label: "New",
                 accelerator: "Ctrl+N",
                 click: () => {
-                    BrowserWindow.getFocusedWindow().webContents.send("new-project");
+                    focusedWindowSend("new-project");
                 }
             },
             {
                 label: "Save",
                 accelerator: "Ctrl+S",
                 click: () => {
-                    BrowserWindow.getFocusedWindow().webContents.send("save");
+                    focusedWindowSend("save");
                 }
             },
             {
@@ -27,13 +31,16 @@ const menuTemplate: MenuItemConstructorOptions[] = [
                 accelerator: "Ctrl+O"
             },
             {
-                label: "Open Project Directory"
+                label: "Open Project Directory",
+                click: () => {
+                    focusedWindowSend("open-project-directory");
+                }
             },
             {
                 label: "Preview Site",
                 accelerator: "Ctrl+P",
                 click: () => {
-                    BrowserWindow.getFocusedWindow().webContents.send("preview-site");
+                    focusedWindowSend("preview-site");
                 }
             },
             {
@@ -61,7 +68,7 @@ const menuTemplate: MenuItemConstructorOptions[] = [
             {
                 label: "Menu",
                 click: () => {
-                    BrowserWindow.getFocusedWindow().webContents.send("open-menu");
+                    focusedWindowSend("open-menu");
                 }
             },
             {

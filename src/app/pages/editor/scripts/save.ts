@@ -2,7 +2,7 @@ import TextWidget from "../CustomElements/Widgets/TextWidget";
 import { widgets } from "../globals";
 import { TextType } from "../types";
 
-const baseHTML = "<!DOCTYPE html><html lang='en'><html><body>";
+const baseHTML = "<!DOCTYPE html><html lang='en'><html><body><style>h1 { font-weight: normal; } h2 { font-weight: normal; } </style>";
 let body = "";
 const endingHTML = "</body></html>";
 

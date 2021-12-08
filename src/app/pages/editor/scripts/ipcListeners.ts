@@ -10,3 +10,7 @@ ipc.on("preview-site", () => {
     const url = `${localStorage.getItem("currentProjectDirectory")}/index.html`;
     shell.openExternal(url);
 })
+
+ipc.on("open-project-directory", () => {
+    shell.showItemInFolder(localStorage.getItem("currentProjectDirectory"));
+})
