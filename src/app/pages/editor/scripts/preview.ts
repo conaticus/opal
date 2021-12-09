@@ -3,13 +3,22 @@ import appendCustomElement from "../util/appendCustomElement";
 import WidgetInspector from "../CustomElements/WidgetInspector";
 import { tabs } from "./sidebar";
 
-const preview = document.getElementById("preview");
-const widgetContainer = new WidgetContainer();
-appendCustomElement(preview, widgetContainer);
+const widgetContainers = document.getElementById("widget-containers");
 
-widgetContainer.element.addEventListener("widget-create", (e: CustomEvent) => {
-    const widgetInspector = new WidgetInspector(e.detail.widget);
+const createWidgetContainer = () => {
+    const container = new WidgetContainer();
+    appendCustomElement(widgetContainers, container);
 
-    tabs.setChildElement("Inspector", widgetInspector.element);
-    tabs.setCurrentTab("Inspector");
-})
+    container.element.addEventListener("widget-create", (e: CustomEvent) => {
+        const widgetInspector = new WidgetInspector(e.detail.widgetIndex);
+
+        tabs.setChildElement("Inspector", widgetInspector.element);
+        tabs.setCurrentTab("Inspector");
+
+        createWidgetContainer();
+    })
+}
+
+createWidgetContainer();
+
+export { widgetContainers };

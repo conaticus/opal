@@ -1,5 +1,6 @@
 import { IpcRenderer } from "electron";
 import * as filesystem from "fs/promises";
+import * as filesystemSync from "fs";
 import { shell as sh } from "electron";
 
 export type { OpenDialogOptions } from "electron";
@@ -7,6 +8,9 @@ export type { OpenDialogOptions } from "electron";
 declare global {
     const ipc: IpcRenderer;
     const fs: typeof filesystem;
+    const fsSync: {
+        readFile: typeof filesystemSync.readFileSync;
+    }
     const shell: {
         openExternal: typeof sh.openExternal;
         showItemInFolder: typeof sh.showItemInFolder;
@@ -43,9 +47,16 @@ export interface TextWidgetProperties extends WidgetProperties {
     size: WidgetProperty<number>;
 }
 
+export interface SaveWidget {
+    type: string;
+    properties: any;
+    propertyTypes: any;
+}
+
 export interface ProjectInfo {
     name: string;
     isOpal?: boolean;
+    widgets: SaveWidget[]
 }
 
 export enum TextType {

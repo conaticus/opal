@@ -24,7 +24,10 @@ const menuTemplate: MenuItemConstructorOptions[] = [
             },
             {
                 label: "Build",
-                accelerator: "Ctrl+B"
+                accelerator: "Ctrl+B",
+                click: () => {
+                    focusedWindowSend("build");
+                }
             },
             {
                 label: "Open",

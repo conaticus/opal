@@ -8,8 +8,9 @@ import Widget from "./Widgets/Widget";
 export default class WidgetContainer extends CustomElement {
     public occupied: boolean;
 
-    constructor() {
+    constructor(element: HTMLDivElement = null) {
         super();
+        if (element) this.element = element;
         this.occupied = false;
         
         this.element.className = "widget-container";
@@ -39,14 +40,18 @@ export default class WidgetContainer extends CustomElement {
                 return;
         }
 
-        widgets.push(widget);
+        this.addWidget(widget);
+    }
+
+    public addWidget(widget: Widget): void {
+        const widgetIndex = widgets.push(widget) - 1;
         appendCustomElement(this.element, widget);
-        this.dispatchWidgetCreate(widget);
+        this.dispatchWidgetCreate(widgetIndex);
         this.occupied = true;
     }
 
-    private dispatchWidgetCreate(widget: Widget) {
-        const widgetEvent = new CustomEvent("widget-create", { detail: { widget } });
+    private dispatchWidgetCreate(widgetIndex: number) {
+        const widgetEvent = new CustomEvent("widget-create", { detail: { widgetIndex } });
         this.element.dispatchEvent(widgetEvent);
     }
 }

@@ -1,4 +1,4 @@
-import { OpenDialogOptions } from "../editor/types";
+import { OpenDialogOptions, ProjectInfo } from "../editor/types";
 
 const form = document.getElementById("new-project-form");
 const projectDirectoryInput = <HTMLInputElement>document.getElementById("project-directory-input");
@@ -24,8 +24,11 @@ form.addEventListener("submit", async (e) => {
     if ((await fs.readdir(rootDir)).length !== 0) {
         alert("ERROR: Directory must be empty.");
         return;
-    } 
-    await fs.writeFile(`${rootDir}/project-info.json`, JSON.stringify({ name: projectName, isOpal: true }));
+    }
+
+    const projectInfo = <ProjectInfo>{ name: projectName, widgets: [], isOpal: true };
+
+    await fs.writeFile(`${rootDir}/project-info.json`, JSON.stringify(projectInfo));
 
     localStorage.setItem("currentProjectDirectory", rootDir);
     location.href = "../editor/index.html";

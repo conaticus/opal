@@ -3,12 +3,15 @@ import Widget from "./Widgets/Widget";
 import TextWidget from "./Widgets/TextWidget";
 import handleInspectorChange from "../util/handleInspectorChange";
 import { WidgetProperty, WidgetPropertyChoice, WidgetPropertyType } from "../types";
+import { widgets } from "../globals";
 
 export default class WidgetInspector extends CustomElement {
-    constructor(private widget: Widget) {
+    // Widget index required in order to update the widget directly, for when saving the project
+    constructor(private widgetIndex: number) {
         super();
         this.element.className = "widget-inspector";
 
+        const widget: Widget = widgets[widgetIndex];
         for (const propertyName in widget.propertyTypes) {
             const widgetPropertyType = widget.propertyTypes[propertyName];
 
@@ -32,16 +35,17 @@ export default class WidgetInspector extends CustomElement {
         inputElement.className = "widget-inspector-input";
         this.element.appendChild(inputElement);
 
-        const property = this.widget.properties[propertyName];
+        
+        const property = widgets[this.widgetIndex].properties[propertyName];
         if (property.value)
             inputElement.value = property.value;
         
         inputElement.addEventListener("input", () => {
-            handleInspectorChange(property, inputElement.value);
+            handleInspectorChange(widgets[this.widgetIndex].properties[propertyName], inputElement.value);
         });
 
-        this.widget.element.addEventListener("input", () => {
-            inputElement.value = (this.widget as TextWidget).element.value;
+        widgets[this.widgetIndex].element.addEventListener("input", () => {
+            inputElement.value = (widgets[this.widgetIndex] as any).element.value;
         })
     }
 
@@ -49,7 +53,7 @@ export default class WidgetInspector extends CustomElement {
         const choiceElement = document.createElement("select");
         choiceElement.className = "widget-inspector-input";
 
-        const property = this.widget.properties[propertyName] as WidgetProperty<WidgetPropertyChoice>;
+        const property = widgets[this.widgetIndex].properties[propertyName] as WidgetProperty<WidgetPropertyChoice>;
 
         for (const choiceKey in property.value.choiceEnum) {
            const choiceString: string = property.value.choiceEnum[choiceKey];
@@ -64,7 +68,7 @@ export default class WidgetInspector extends CustomElement {
         this.element.appendChild(choiceElement);
         
         choiceElement.addEventListener("input", () => {
-            handleInspectorChange(property, choiceElement.value);
+            handleInspectorChange(widgets[this.widgetIndex].properties[propertyName], choiceElement.value);
         })
     }
 
@@ -75,13 +79,13 @@ export default class WidgetInspector extends CustomElement {
         sliderElement.min = "1";
         sliderElement.max = "100";
 
-        const property = this.widget.properties[propertyName];
+        const property = widgets[this.widgetIndex].properties[propertyName];
         sliderElement.value = property.value;
 
         this.element.appendChild(sliderElement);
 
         sliderElement.addEventListener("input", () => {
-            handleInspectorChange(property, sliderElement.value);
+            handleInspectorChange(widgets[this.widgetIndex].properties[propertyName], sliderElement.value);
         })
     }
 }
