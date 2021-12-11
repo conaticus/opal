@@ -2,6 +2,7 @@ import CustomElement from "./CustomElement";
 import Widget from "./Widgets/Widget";
 import handleInspectorChange from "../util/handleInspectorChange";
 import { WidgetProperty, WidgetPropertyChoice, WidgetPropertyType } from "../types";
+import camelToCapitalised from "../util/camelToCapitalised";
 
 const MIN_TEXT_SIZE = "1";
 const MAX_TEXT_SIZE = "100";
@@ -15,17 +16,24 @@ export default class WidgetInspector extends CustomElement {
         for (const propertyKey in widget.propertyTypes) {
             const property = widget.properties[propertyKey];
             const propertyType = widget.propertyTypes[propertyKey];
+
+            const propertyLabel = document.createElement("h4");
+            propertyLabel.innerText = camelToCapitalised(propertyKey);
+            this.element.appendChild(propertyLabel);
+
             const inspectorProperty = this.addInspectorProperty(property, propertyType);
-            inspectorProperty.className = "widget-inspector-input";
+            inspectorProperty.className = "widget-inspector-child";
 
             this.widget.element.addEventListener("property-enabled", (e: CustomEvent) => {
                 if (e.detail.propertyKey === propertyKey) {
+                    propertyLabel.style.display = "block";
                     inspectorProperty.style.display = "block";
                 }
             });
 
             this.widget.element.addEventListener("property-disabled", (e: CustomEvent) => {
                 if (e.detail.propertyKey === propertyKey) {
+                    propertyLabel.style.display = "none";
                     inspectorProperty.style.display = "none";
                 }
             })
