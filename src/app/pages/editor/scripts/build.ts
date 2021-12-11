@@ -1,6 +1,7 @@
 import TextWidget from "../CustomElements/Widgets/TextWidget";
 import { widgets } from "../globals";
 import { TextType } from "../types";
+import save from "./save";
 
 const baseHTML = "<!DOCTYPE html><html lang='en'><html><body><style>h1 { font-weight: normal; margin: 0; } h2 { font-weight: normal; margin: 0; } h3 { font-weight: normal; margin: 0; } h4 { font-weight: normal; margin: 0; } h5 { font-weight: normal; margin: 0; } h6 { font-weight: normal; margin: 0; } p { font-weight: normal; margin: 0; } </style>";
 let body = "";
@@ -36,10 +37,15 @@ const appendTextWidgetSource = (widget: TextWidget): void => {
     body += `<${elementType} style=\"${widget.properties.size.value ? `font-size: ${widget.properties.size.value}px;` : ''}\">${widget.properties.text.value}</${elementType}>` 
 }
 
-ipc.on("build", () => {
+const build = async (): Promise<void> => {
+    save();
     widgets.forEach(widget => {
         if (widget instanceof TextWidget) appendTextWidgetSource(widget);
     })
 
-    fs.writeFile(`${localStorage.getItem("currentProjectDirectory")}/index.html`, baseHTML + body + endingHTML);
-})
+    await fs.writeFile(`${localStorage.getItem("currentProjectDirectory")}/index.html`, baseHTML + body + endingHTML);
+}
+
+ipc.on("build", build);
+
+export default build

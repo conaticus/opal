@@ -2,7 +2,7 @@ import { widgets } from "../globals";
 import { SaveWidget } from "../types";
 import { projectInfo } from "./load";
 
-ipc.on("save", async () => {
+const save = async (): Promise<void> => {
     document.body.style.cursor = "progress";
     
     projectInfo.widgets = [];
@@ -24,4 +24,8 @@ ipc.on("save", async () => {
     setTimeout(() => {
         document.body.style.cursor = "default";
     }, 50);
-})
+}
+
+ipc.on("save", save);
+
+export default save

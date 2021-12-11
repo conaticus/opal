@@ -1,4 +1,4 @@
-import { app, BrowserWindow, Menu, nativeTheme } from "electron";
+import { app, BrowserWindow, ipcMain, Menu, nativeTheme } from "electron";
 import menu from "./menu";
 import * as path from "path";
 import attatchIpcListeners from "./attachIpcListeners";
@@ -8,7 +8,7 @@ process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
 nativeTheme.themeSource = "light";
 Menu.setApplicationMenu(menu);
 
-const createWindow = () => {
+const createWindow = (): void => {
     const win = new BrowserWindow({
         width: 800,
         height: 600,

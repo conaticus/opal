@@ -1,4 +1,4 @@
-import { BrowserWindow, Menu, MenuItemConstructorOptions } from "electron";
+import { BrowserWindow, ipcMain, Menu, MenuItemConstructorOptions } from "electron";
 
 const focusedWindowSend = (channel: string) => {
     BrowserWindow.getFocusedWindow().webContents.send(channel);
