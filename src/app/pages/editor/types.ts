@@ -25,6 +25,11 @@ export enum WidgetPropertyType {
     TEXT_SHORT,
     CHOICE,
     SLIDER,
+    BOOLEAN,
+}
+
+    export interface WidgetPropertyTypes {
+    [key: string]: WidgetPropertyType;
 }
 
 export interface WidgetPropertyChoice {
@@ -34,6 +39,7 @@ export interface WidgetPropertyChoice {
 
 export interface WidgetProperty<ValueType> {
     value: ValueType;
+    disabled: boolean;
     handleInspectorChange?: Function;
 }
 
@@ -45,6 +51,7 @@ export interface TextWidgetProperties extends WidgetProperties {
     text: WidgetProperty<string>;
     type: WidgetProperty<WidgetPropertyChoice>;
     size: WidgetProperty<number>;
+    resizeToType: WidgetProperty<boolean>;
 }
 
 export interface SaveWidget {

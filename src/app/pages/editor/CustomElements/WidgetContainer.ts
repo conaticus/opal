@@ -44,14 +44,14 @@ export default class WidgetContainer extends CustomElement {
     }
 
     public addWidget(widget: Widget): void {
-        const widgetIndex = widgets.push(widget) - 1;
+        widgets.push(widget);
         appendCustomElement(this.element, widget);
-        this.dispatchWidgetCreate(widgetIndex);
+        this.dispatchWidgetCreate(widget);
         this.occupied = true;
     }
 
-    private dispatchWidgetCreate(widgetIndex: number) {
-        const widgetEvent = new CustomEvent("widget-create", { detail: { widgetIndex } });
+    private dispatchWidgetCreate(widget: Widget) {
+        const widgetEvent = new CustomEvent("widget-create", { detail: { widget } });
         this.element.dispatchEvent(widgetEvent);
     }
 }

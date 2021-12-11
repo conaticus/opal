@@ -2,7 +2,7 @@ import TextWidget from "../CustomElements/Widgets/TextWidget";
 import { widgets } from "../globals";
 import { TextType } from "../types";
 
-const baseHTML = "<!DOCTYPE html><html lang='en'><html><body><style>h1 { font-weight: normal; } h2 { font-weight: normal; } </style>";
+const baseHTML = "<!DOCTYPE html><html lang='en'><html><body><style>h1 { font-weight: normal; margin: 0; } h2 { font-weight: normal; margin: 0; } h3 { font-weight: normal; margin: 0; } h4 { font-weight: normal; margin: 0; } h5 { font-weight: normal; margin: 0; } h6 { font-weight: normal; margin: 0; } p { font-weight: normal; margin: 0; } </style>";
 let body = "";
 const endingHTML = "</body></html>";
 
@@ -33,7 +33,7 @@ const appendTextWidgetSource = (widget: TextWidget): void => {
         default: return;
     }
 
-    body += `<${elementType} style=\"font-size:${widget.properties.size.value}px;\">${widget.properties.text.value}</${elementType}>` 
+    body += `<${elementType} style=\"${widget.properties.size.value ? `font-size: ${widget.properties.size.value}px;` : ''}\">${widget.properties.text.value}</${elementType}>` 
 }
 
 ipc.on("build", () => {

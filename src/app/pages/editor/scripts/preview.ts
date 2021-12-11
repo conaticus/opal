@@ -10,7 +10,7 @@ const createWidgetContainer = () => {
     appendCustomElement(widgetContainers, container);
 
     container.element.addEventListener("widget-create", (e: CustomEvent) => {
-        const widgetInspector = new WidgetInspector(e.detail.widgetIndex);
+        const widgetInspector = new WidgetInspector(e.detail.widget);
 
         tabs.setChildElement("Inspector", widgetInspector.element);
         tabs.setCurrentTab("Inspector");

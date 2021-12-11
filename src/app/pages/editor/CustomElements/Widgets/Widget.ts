@@ -1,12 +1,8 @@
-import { SaveWidget, WidgetProperties, WidgetPropertyType } from "../../types";
+import { SaveWidget, WidgetProperties, WidgetProperty, WidgetPropertyTypes } from "../../types";
 import CustomElement from "../CustomElement";
 import TextWidget from "./TextWidget";
 
-interface WidgetPropertyTypes {
-    [key: string]: WidgetPropertyType;
-}
-
-export default class Widget extends CustomElement {
+export default abstract class Widget extends CustomElement {
     public properties: WidgetProperties;
 
     constructor(type: string = "div", public propertyTypes: WidgetPropertyTypes) {
@@ -22,11 +18,26 @@ export default class Widget extends CustomElement {
         }
 
         for (const propertyKey in saveWidget.properties) {
-            widget.properties[propertyKey].value = saveWidget.properties[propertyKey];
+            const property = saveWidget.properties[propertyKey];
+            widget.properties[propertyKey].value = property;
         }
 
         widget.propertyTypes = saveWidget.propertyTypes;
 
         return widget;
     }
+
+    public disableProperty(propertyKey: string): void {
+        this.properties[propertyKey].disabled = true;
+        const disableEvent = new CustomEvent("property-disabled", { detail: { propertyKey } })
+        this.element.dispatchEvent(disableEvent);
+    }
+
+    public enableProperty(propertyKey: string): void {
+        this.properties[propertyKey].disabled = false;
+        const disableEvent = new CustomEvent("property-enabled", { detail: { propertyKey } })
+        this.element.dispatchEvent(disableEvent);
+    }
+
+    public abstract loadProperties(): void;
 }

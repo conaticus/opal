@@ -7,6 +7,7 @@ const projectDirDialogButton = <HTMLButtonElement>document.getElementById("proje
 projectDirDialogButton.addEventListener("click", async (e) => {
     e.preventDefault();
     const dialogChoice = await ipc.invoke("request-dialog-choice", { properties: ["openDirectory"] } as OpenDialogOptions);
+    if (!dialogChoice) return;
     projectDirectoryInput.value = dialogChoice;
 })
 
@@ -29,6 +30,7 @@ form.addEventListener("submit", async (e) => {
     const projectInfo = <ProjectInfo>{ name: projectName, widgets: [], isOpal: true };
 
     await fs.writeFile(`${rootDir}/project-info.json`, JSON.stringify(projectInfo));
+    await fs.chmod(`${rootDir}/project-info.json`, 444);
 
     localStorage.setItem("currentProjectDirectory", rootDir);
     location.href = "../editor/index.html";
