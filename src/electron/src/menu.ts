@@ -59,10 +59,6 @@ const menuTemplate: MenuItemConstructorOptions[] = [
                 label: "Inspect Element",
                 role: "toggleDevTools"
             },
-            {
-                label: "Reload",
-                role: "reload"
-            }
         ]
     },
     {

@@ -1,4 +1,4 @@
-import { app, BrowserWindow, ipcMain, Menu, nativeTheme } from "electron";
+import { app, BrowserWindow, globalShortcut, ipcMain, Menu, nativeTheme } from "electron";
 import menu from "./menu";
 import * as path from "path";
 import attatchIpcListeners from "./attachIpcListeners";
@@ -23,6 +23,8 @@ const createWindow = (): void => {
 
 app.once("ready", () => {
     createWindow();
+
+    globalShortcut.unregister("CommandOrControl+R");
 
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();

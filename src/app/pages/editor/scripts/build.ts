@@ -44,6 +44,7 @@ const build = async (): Promise<void> => {
     })
 
     await fs.writeFile(`${localStorage.getItem("currentProjectDirectory")}/index.html`, baseHTML + body + endingHTML);
+    body = "";
 }
 
 ipc.on("build", build);
