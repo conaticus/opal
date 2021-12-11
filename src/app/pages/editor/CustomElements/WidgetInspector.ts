@@ -3,6 +3,9 @@ import Widget from "./Widgets/Widget";
 import handleInspectorChange from "../util/handleInspectorChange";
 import { WidgetProperty, WidgetPropertyChoice, WidgetPropertyType } from "../types";
 
+const MIN_TEXT_SIZE = "1";
+const MAX_TEXT_SIZE = "100";
+
 export default class WidgetInspector extends CustomElement {
     // Widget index required in order to update the widget directly, for when saving the project
     constructor(private widget: Widget) {
@@ -12,7 +15,8 @@ export default class WidgetInspector extends CustomElement {
         for (const propertyKey in widget.propertyTypes) {
             const property = widget.properties[propertyKey];
             const propertyType = widget.propertyTypes[propertyKey];
-            const inspectorProperty = <HTMLInputElement>this.addInspectorProperty(property, propertyType);
+            const inspectorProperty = this.addInspectorProperty(property, propertyType);
+            inspectorProperty.className = "widget-inspector-input";
 
             this.widget.element.addEventListener("property-enabled", (e: CustomEvent) => {
                 if (e.detail.propertyKey === propertyKey) {
@@ -44,7 +48,6 @@ export default class WidgetInspector extends CustomElement {
 
     private addTextShort(property: WidgetProperty<string>): HTMLElement {
         const inputElement = document.createElement("textarea");
-        inputElement.className = "widget-inspector-input";
         this.element.appendChild(inputElement);
 
         
@@ -65,7 +68,6 @@ export default class WidgetInspector extends CustomElement {
 
     private addChoice(property: WidgetProperty<WidgetPropertyChoice>): HTMLElement {
         const choiceElement = document.createElement("select");
-        choiceElement.className = "widget-inspector-input";
 
         for (const choiceKey in property.value.choiceEnum) {
            const choiceString: string = property.value.choiceEnum[choiceKey];
@@ -87,21 +89,48 @@ export default class WidgetInspector extends CustomElement {
     }
 
     private addSlider(property: WidgetProperty<number>): HTMLElement {
+        const sliderParent = document.createElement("div");
+        sliderParent.style.display = "flex";
+
         const sliderElement = document.createElement("input");
-        sliderElement.className = "widget-inspector-input";
         sliderElement.type = "range";
-        sliderElement.min = "1";
-        sliderElement.max = "100";
+        sliderElement.min = MIN_TEXT_SIZE;
+        sliderElement.max = MAX_TEXT_SIZE;
+
+        const sliderInputElement = document.createElement("input");
+        sliderInputElement.type = "number";
+        sliderInputElement.min = MIN_TEXT_SIZE;
+        sliderElement.max = MAX_TEXT_SIZE;
+
+        sliderParent.appendChild(sliderElement);
+        sliderParent.appendChild(sliderInputElement);
 
         sliderElement.value = String(property.value);
+        sliderInputElement.value = String(property.value);
 
-        this.element.appendChild(sliderElement);
+        this.element.appendChild(sliderParent);
 
         sliderElement.addEventListener("input", () => {
+            sliderInputElement.value = sliderElement.value;
             handleInspectorChange(property, sliderElement.value);
         })
 
-        return sliderElement;
+        sliderInputElement.addEventListener("input", () => {
+            if (Number(sliderInputElement.value) < Number(MIN_TEXT_SIZE) && sliderInputElement.value !== "") {
+                sliderInputElement.value = MIN_TEXT_SIZE;
+                return;
+            } else if (Number(sliderInputElement.value) > Number(MAX_TEXT_SIZE)) {
+                sliderInputElement.value = MAX_TEXT_SIZE;
+                return;
+            }
+
+            sliderElement.value = sliderInputElement.value;
+            let sliderElementValue = sliderInputElement.value;
+            if (sliderElementValue === "") sliderElementValue = "1"; 
+            handleInspectorChange(property, sliderElementValue);
+        })
+
+        return sliderParent;
     }
 
     private addBoolean(property: WidgetProperty<boolean>): HTMLElement {
