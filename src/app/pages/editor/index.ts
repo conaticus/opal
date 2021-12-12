@@ -1,4 +1,5 @@
-import "./scripts/sidebar";
+import "./scripts/sidenav";
+import "./scripts/inspector";
 import "./scripts/preview";
 import "./scripts/save";
 import "./scripts/build";

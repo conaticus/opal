@@ -1,16 +1,16 @@
-import WidgetContainer from "../CustomElements/WidgetContainer";
-import Widget from "../CustomElements/Widgets/Widget";
+import ElementContainer from "../CustomHtmlElements/ElementContainer";
+import Element from "../CustomHtmlElements/OpalElements/Element";
 import { ProjectInfo } from "../types";
-import { widgetContainers } from "./preview";
+import { elementContainers } from "./preview";
 
 const projectInfoRaw = fsSync.readFile(`${localStorage.getItem("currentProjectDirectory")}/project-info.json`, "utf8");
 const projectInfo = <ProjectInfo>JSON.parse(projectInfoRaw);
 document.title = `Opal - ${projectInfo.name}`;
 
-projectInfo.widgets.forEach(widget => {
-    const widgetContainer = new WidgetContainer(widgetContainers.lastChild as HTMLDivElement);
-    const generatedWidget = Widget.generateFromSave(widget);
-    widgetContainer.addWidget(generatedWidget);
+projectInfo.elements.forEach(element => {
+    const elementContainer = new ElementContainer(elementContainers.lastChild as HTMLDivElement);
+    const generatedWidget = Element.generateFromSave(element);
+    elementContainer.addElement(generatedWidget);
     generatedWidget.loadProperties();
 })
 

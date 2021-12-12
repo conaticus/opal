@@ -3,21 +3,12 @@ body {
     padding: 0;
     box-sizing: border-box;
     user-select: none;
+    overflow: hidden;
+    font-family: 'Lato', sans-serif;
 }
 
 main {
     display: flex;
-}
-
-.sidebar {
-    background-color: black;
-    color: white;
-    height: 100vh;
-    flex: 20%;
-}
-
-.preview {
-    padding: 20px;
 }
 
 h1 {
@@ -34,10 +25,14 @@ h3 {
 
 h4 {
     margin: 0;
+    font-weight: 400;
+    font-size: 25px;
 }
 
 h5 {
     margin: 0;
+    font-weight: 700;
+    font-size: 16px;
 }
 
 h6 {

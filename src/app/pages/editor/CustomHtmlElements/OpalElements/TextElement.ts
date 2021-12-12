@@ -1,16 +1,16 @@
-import { TextType, TextWidgetProperties, WidgetPropertyType } from "../../types";
+import { ElementPropertyType, TextElementProperties, TextType } from "../../types";
 import pxToNumber from "../../util/pxToNumber";
-import Widget from "./Widget";
+import Element from "./Element";
 
 const DEFAULT_TEXT_SIZE = 18;
 
-export default class TextWidget extends Widget {
-    properties: TextWidgetProperties;
-    element: HTMLTextAreaElement;
+export default class TextElement extends Element {
+    properties: TextElementProperties;
+    htmlElement: HTMLTextAreaElement;
 
     constructor() {
-        super("textarea", { text: WidgetPropertyType.TEXT_SHORT, type: WidgetPropertyType.CHOICE, size: WidgetPropertyType.SLIDER, resizeToType: WidgetPropertyType.BOOLEAN });
-        this.element.className = "text-widget";
+        super("textarea", { text: ElementPropertyType.TEXT_SHORT, type: ElementPropertyType.CHOICE, size: ElementPropertyType.SLIDER, resizeToType: ElementPropertyType.BOOLEAN });
+        this.htmlElement.className = "text-element";
 
         this.initialiseProperties();
 
@@ -24,20 +24,20 @@ export default class TextWidget extends Widget {
         this.properties.resizeToType.handleInspectorChange = (value: boolean) => this.setResizeToType(value);
     }
 
-    private initialiseProperties() {
+    protected initialiseProperties(): void {
         this.properties.type = { value: { choiceEnum: TextType }, disabled: false };
         this.properties.text = { value: "", disabled: false };
-        this.properties.size = { value: pxToNumber(this.element.style.fontSize), disabled: false };
+        this.properties.size = { value: pxToNumber(this.htmlElement.style.fontSize), disabled: false };
         this.properties.resizeToType = { value: false, disabled: false };
     }
 
     public setText(value: string): void {
         this.properties.text.value = value;
-        this.element.value = value;
+        this.htmlElement.value = value;
     }
 
     public setSize(value: number): void {
-        this.element.style.fontSize = value + "px";
+        this.htmlElement.style.fontSize = value + "px";
         this.properties.size.value = value;
     }
 

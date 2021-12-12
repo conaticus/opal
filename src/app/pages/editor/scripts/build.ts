@@ -1,5 +1,5 @@
-import TextWidget from "../CustomElements/Widgets/TextWidget";
-import { widgets } from "../globals";
+import TextElement from "../CustomHtmlElements/OpalElements/TextElement";
+import { elements } from "../globals";
 import { TextType } from "../types";
 import save from "./save";
 
@@ -7,9 +7,9 @@ const baseHTML = "<!DOCTYPE html><html lang='en'><html><body><style>h1 { font-we
 let body = "";
 const endingHTML = "</body></html>";
 
-const appendTextWidgetSource = (widget: TextWidget): void => {
+const appendTextElementSource = (element: TextElement): void => {
     let elementType: string;
-    switch (widget.properties.type.value.currentChoice) {
+    switch (element.properties.type.value.currentChoice) {
         case TextType.HEADING_ONE:
             elementType = "h1";
             break;
@@ -34,13 +34,13 @@ const appendTextWidgetSource = (widget: TextWidget): void => {
         default: return;
     }
 
-    body += `<${elementType} style=\"${widget.properties.size.value ? `font-size: ${widget.properties.size.value}px;` : ''}\">${widget.properties.text.value}</${elementType}>` 
+    body += `<${elementType} style=\"${element.properties.size.value ? `font-size: ${element.properties.size.value}px;` : ''}\">${element.properties.text.value}</${elementType}>` 
 }
 
 const build = async (): Promise<void> => {
     save();
-    widgets.forEach(widget => {
-        if (widget instanceof TextWidget) appendTextWidgetSource(widget);
+    elements.forEach(element => {
+        if (element instanceof TextElement) appendTextElementSource(element);
     })
 
     await fs.writeFile(`${localStorage.getItem("currentProjectDirectory")}/index.html`, baseHTML + body + endingHTML);
@@ -49,4 +49,4 @@ const build = async (): Promise<void> => {
 
 ipc.on("build", build);
 
-export default build
+export default build;

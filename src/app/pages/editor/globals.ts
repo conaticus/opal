@@ -1,5 +1,5 @@
-import Widget from "./CustomElements/Widgets/Widget";
+import Element from "./CustomHtmlElements/OpalElements/Element";
 
-const widgets: Widget[] = [];
+const elements: Element[] = [];
 
-export { widgets };
+export { elements };

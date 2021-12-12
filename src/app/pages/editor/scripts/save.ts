@@ -1,22 +1,22 @@
-import { widgets } from "../globals";
-import { SaveWidget } from "../types";
+import { elements } from "../globals";
+import { ElementSave } from "../types";
 import { projectInfo } from "./load";
 
 const save = async (): Promise<void> => {
     document.body.style.cursor = "progress";
     
-    projectInfo.widgets = [];
+    projectInfo.elements = [];
 
-    widgets.forEach(widget => {
-        const widgetSave = <SaveWidget>{ properties: {}, propertyTypes: {} };
-        widgetSave.propertyTypes = widget.propertyTypes;
+    elements.forEach(element => {
+        const elementSave = <ElementSave>{ properties: {}, propertyTypes: {} };
+        elementSave.propertyTypes = element.propertyTypes;
 
-        for (const propertyKey in widget.properties) {
-            widgetSave.type = widget.constructor.name;
-            widgetSave.properties[propertyKey] = widget.properties[propertyKey].value;
+        for (const propertyKey in element.properties) {
+            elementSave.type = element.constructor.name;
+            elementSave.properties[propertyKey] = element.properties[propertyKey].value;
         }
 
-        projectInfo.widgets.push(widgetSave);
+        projectInfo.elements.push(elementSave);
     })
 
     await fs.writeFile(`${localStorage.getItem("currentProjectDirectory")}/project-info.json`, JSON.stringify(projectInfo));
@@ -28,4 +28,4 @@ const save = async (): Promise<void> => {
 
 ipc.on("save", save);
 
-export default save
+export default save;

@@ -1,37 +1,36 @@
 import CustomElement from "./CustomElement";
-import Widget from "./Widgets/Widget";
+import Element from "./OpalElements/Element";
 import handleInspectorChange from "../util/handleInspectorChange";
-import { WidgetProperty, WidgetPropertyChoice, WidgetPropertyType } from "../types";
 import camelToCapitalised from "../util/camelToCapitalised";
+import { ElementProperty, ElementPropertyChoice, ElementPropertyType } from "../types";
 
 const MIN_TEXT_SIZE = "1";
 const MAX_TEXT_SIZE = "100";
 
-export default class WidgetInspector extends CustomElement {
-    // Widget index required in order to update the widget directly, for when saving the project
-    constructor(private widget: Widget) {
+export default class ElementInspector extends CustomElement {
+    constructor(private element: Element) {
         super();
-        this.element.className = "widget-inspector";
+        this.htmlElement.className = "element-inspector";
 
-        for (const propertyKey in widget.propertyTypes) {
-            const property = widget.properties[propertyKey];
-            const propertyType = widget.propertyTypes[propertyKey];
+        for (const propertyKey in element.propertyTypes) {
+            const property = element.properties[propertyKey];
+            const propertyType = element.propertyTypes[propertyKey];
 
             const propertyLabel = document.createElement("h4");
             propertyLabel.innerText = camelToCapitalised(propertyKey);
-            this.element.appendChild(propertyLabel);
+            this.htmlElement.appendChild(propertyLabel);
 
             const inspectorProperty = this.addInspectorProperty(property, propertyType);
-            inspectorProperty.className = "widget-inspector-child";
+            inspectorProperty.className = "element-inspector-child";
 
-            this.widget.element.addEventListener("property-enabled", (e: CustomEvent) => {
+            this.element.htmlElement.addEventListener("property-enabled", (e: CustomEvent) => {
                 if (e.detail.propertyKey === propertyKey) {
                     propertyLabel.style.display = "block";
                     inspectorProperty.style.display = "block";
                 }
             });
 
-            this.widget.element.addEventListener("property-disabled", (e: CustomEvent) => {
+            this.element.htmlElement.addEventListener("property-disabled", (e: CustomEvent) => {
                 if (e.detail.propertyKey === propertyKey) {
                     propertyLabel.style.display = "none";
                     inspectorProperty.style.display = "none";
@@ -40,23 +39,23 @@ export default class WidgetInspector extends CustomElement {
         }
     }
 
-    private addInspectorProperty(property: WidgetProperty<any>, type: WidgetPropertyType): HTMLElement {
+    private addInspectorProperty(property: ElementProperty<any>, type: ElementPropertyType): HTMLElement {
         switch (type) {
-            case WidgetPropertyType.TEXT_SHORT:
+            case ElementPropertyType.TEXT_SHORT:
                 return this.addTextShort(property);
-            case WidgetPropertyType.CHOICE:
+            case ElementPropertyType.CHOICE:
                 return this.addChoice(property);
-            case WidgetPropertyType.SLIDER:
+            case ElementPropertyType.SLIDER:
                 return this.addSlider(property);
-            case WidgetPropertyType.BOOLEAN:
+            case ElementPropertyType.BOOLEAN:
                 return this.addBoolean(property);
             default: break;
         }
     }
 
-    private addTextShort(property: WidgetProperty<string>): HTMLElement {
+    private addTextShort(property: ElementProperty<string>): HTMLElement {
         const inputElement = document.createElement("textarea");
-        this.element.appendChild(inputElement);
+        this.htmlElement.appendChild(inputElement);
 
         
         if (property.value)
@@ -66,15 +65,15 @@ export default class WidgetInspector extends CustomElement {
             handleInspectorChange(property, inputElement.value);
         });
 
-        this.widget.element.addEventListener("input", () => {
-            handleInspectorChange(property, (this.widget.element as any).value);
-            inputElement.value = (this.widget as any).element.value;
+        this.element.htmlElement.addEventListener("input", () => {
+            handleInspectorChange(property, (this.element.htmlElement as any).value);
+            inputElement.value = (this.element as any).htmlElement.value;
         })
 
         return inputElement;
     }
 
-    private addChoice(property: WidgetProperty<WidgetPropertyChoice>): HTMLElement {
+    private addChoice(property: ElementProperty<ElementPropertyChoice>): HTMLElement {
         const choiceElement = document.createElement("select");
 
         for (const choiceKey in property.value.choiceEnum) {
@@ -87,7 +86,7 @@ export default class WidgetInspector extends CustomElement {
 
         choiceElement.value = property.value.currentChoice;
 
-        this.element.appendChild(choiceElement);
+        this.htmlElement.appendChild(choiceElement);
         
         choiceElement.addEventListener("input", () => {
             handleInspectorChange(property, choiceElement.value);
@@ -96,7 +95,7 @@ export default class WidgetInspector extends CustomElement {
         return choiceElement;
     }
 
-    private addSlider(property: WidgetProperty<number>): HTMLElement {
+    private addSlider(property: ElementProperty<number>): HTMLElement {
         const sliderParent = document.createElement("div");
         sliderParent.style.display = "flex";
 
@@ -116,7 +115,7 @@ export default class WidgetInspector extends CustomElement {
         sliderElement.value = String(property.value);
         sliderInputElement.value = String(property.value);
 
-        this.element.appendChild(sliderParent);
+        this.htmlElement.appendChild(sliderParent);
 
         sliderElement.addEventListener("input", () => {
             sliderInputElement.value = sliderElement.value;
@@ -141,12 +140,12 @@ export default class WidgetInspector extends CustomElement {
         return sliderParent;
     }
 
-    private addBoolean(property: WidgetProperty<boolean>): HTMLElement {
+    private addBoolean(property: ElementProperty<boolean>): HTMLElement {
         const booleanElement = document.createElement("input");
         booleanElement.type = "checkbox";
         booleanElement.checked = property.value;
         
-        this.element.appendChild(booleanElement);
+        this.htmlElement.appendChild(booleanElement);
         booleanElement.addEventListener("input", () => {
             handleInspectorChange(property, booleanElement.checked);
         })

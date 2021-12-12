@@ -1,24 +1,22 @@
-import WidgetContainer from "../CustomElements/WidgetContainer";
-import appendCustomElement from "../util/appendCustomElement";
-import WidgetInspector from "../CustomElements/WidgetInspector";
-import { tabs } from "./sidebar";
+import ElementContainer from "../CustomHtmlElements/ElementContainer";
+import ElementInspector from "../CustomHtmlElements/ElementInspector";
+import appendCustomHtmlElement from "../util/appendCustomHtmlElement";
+import { inspector } from "./inspector";
 
-const widgetContainers = document.getElementById("widget-containers");
+const elementContainers = document.getElementById("element-containers");
 
-const createWidgetContainer = () => {
-    const container = new WidgetContainer();
-    appendCustomElement(widgetContainers, container);
+const createElementContainer = (): void => {
+    const elementContainer = new ElementContainer();
+    appendCustomHtmlElement(elementContainers, elementContainer);
 
-    container.element.addEventListener("widget-create", (e: CustomEvent) => {
-        const widgetInspector = new WidgetInspector(e.detail.widget);
+    elementContainer.htmlElement.addEventListener("element-create", (e: CustomEvent) => {
+        const elementInspector = new ElementInspector(e.detail.element);
+        appendCustomHtmlElement(inspector, elementInspector);
 
-        tabs.setChildElement("Inspector", widgetInspector.element);
-        tabs.setCurrentTab("Inspector");
-
-        createWidgetContainer();
+        createElementContainer();
     })
 }
 
-createWidgetContainer();
+createElementContainer();
 
-export { widgetContainers };
+export { elementContainers };

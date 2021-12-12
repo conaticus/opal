@@ -1,23 +1,12 @@
-.widget-preview {
-    background-color: white;
-    color: black;
-    padding: 10px 20px;
-    margin: auto;
-    cursor: move;
-    font-size: 20px;
-    text-align: center;
-    font-weight: 600;
-}
-
-.widget-container {
-    width: 80vw;
+.element-container {
+    width: 25vw;
     height: 50px;
     border: solid 1px rgb(172, 172, 172);
     padding: 10px;
     margin: 10px auto;
 }
 
-.text-widget {
+.text-element {
     width: 100%;
     height: 100%;
     resize: none;
@@ -26,30 +15,30 @@
     background: none;
 }
 
-.text-widget-h1 {
+.text-element-h1 {
     font-size: 60px;
 }
 
-.text-widget-h2 {
+.text-element-h2 {
     font-size: 50px;
 }
 
-.text-widget-h3 {
+.text-element-h3 {
     font-size: 45px;
 }
 
-.text-widget-h4 {
+.text-element-h4 {
     font-size: 40px;
 }
 
-.text-widget-h5 {
+.text-element-h5 {
     font-size: 35px;
 }
 
-.text-widget-h6 {
+.text-element-h6 {
     font-size: 30px;
 }
 
-.text-widget-p {
+.text-element-p {
     font-size: 18px;
 }

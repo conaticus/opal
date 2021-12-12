@@ -5,17 +5,24 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Opal</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet"> 
     <link rel="stylesheet" href="./styles/index.css">
     <link rel="stylesheet" href="./styles/tabs.css">
-    <link rel="stylesheet" href="./styles/widgets.css">
+    <link rel="stylesheet" href="./styles/elements.css">
     <link rel="stylesheet" href="./styles/inspector.css">
+    <link rel="stylesheet" href="./styles/custom-elements.css">
+    <link rel="stylesheet" href="./styles/sidenav.css">
+    <link rel="stylesheet" href="./styles/preview.css">
 </head>
 <body>
     <main>
-        <div class="sidebar" id="sidebar"></div>
+        <div class="sidenav" id="sidenav"></div>
         <div class="preview" id="preview">
-            <div id="widget-containers"></div>
+            <div id="element-containers"></div>
         </div>
+        <div id="inspector" class="inspector block"></div>
     </main>
    <script src="../../build/editor.js"></script>
 </body>

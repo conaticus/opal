@@ -17,44 +17,40 @@ declare global {
     }
 }
 
-export enum WidgetType {
-    TEXT,
-}
-
-export enum WidgetPropertyType {
+export enum ElementPropertyType {
     TEXT_SHORT,
     CHOICE,
     SLIDER,
     BOOLEAN,
 }
 
-    export interface WidgetPropertyTypes {
-    [key: string]: WidgetPropertyType;
+export interface ElementPropertyTypes {
+    [key: string]: ElementPropertyType;
 }
 
-export interface WidgetPropertyChoice {
+export interface ElementPropertyChoice {
     currentChoice?: string;
     choiceEnum: any;
 }
 
-export interface WidgetProperty<ValueType> {
+export interface ElementProperty<ValueType> {
     value: ValueType;
     disabled: boolean;
     handleInspectorChange?: Function;
 }
 
-export interface WidgetProperties {
-    [key: string]: WidgetProperty<any>;
+export interface ElementProperties {
+    [key: string]: ElementProperty<any>;
 }
 
-export interface TextWidgetProperties extends WidgetProperties {
-    text: WidgetProperty<string>;
-    type: WidgetProperty<WidgetPropertyChoice>;
-    size: WidgetProperty<number>;
-    resizeToType: WidgetProperty<boolean>;
+export interface TextElementProperties extends ElementProperties {
+    text: ElementProperty<string>;
+    type: ElementProperty<ElementPropertyChoice>;
+    size: ElementProperty<number>;
+    resizeToType: ElementProperty<boolean>;
 }
 
-export interface SaveWidget {
+export interface ElementSave {
     type: string;
     properties: any;
     propertyTypes: any;
@@ -63,7 +59,7 @@ export interface SaveWidget {
 export interface ProjectInfo {
     name: string;
     isOpal?: boolean;
-    widgets: SaveWidget[]
+    elements: ElementSave[]
 }
 
 export enum TextType {

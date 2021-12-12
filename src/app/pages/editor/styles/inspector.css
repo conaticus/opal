@@ -1,8 +1,13 @@
-.widget-inspector-child {
+.inspector {
+    padding: 10px;
+    text-align: center;
+}
+
+.element-inspector-child {
     margin: 15px auto;
 }
 
-.widget-inspector textarea {
+.element-inspector textarea {
     resize: none;
     outline: none;
 }

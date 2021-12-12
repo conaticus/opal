@@ -18,19 +18,19 @@ Opal interprets all configurations and scripts and generates optimised website c
 - `npm start` - start the application
 
 
-## Widgets
+## Elements
 
 ### Description
-Widgets can be used by developers to add elements to the UI of a website. A widget is a component of a website such as a button or pricing list. Each and every widget consists of its own properties, which can be accessed through the inspector or via the API.
+Elements can be used by developers to add pieces of UI to a website. A element is a component of a website such as a button or pricing list. Each and every element consists of its own properties, which can be accessed through the inspector or via the API.
 
-### Text Widget
+### Text Element
 
-A widget that allows you to add text to your webpage.
+A element that allows you to add text to your webpage.
 
 #### Properties
 
 **Type** - the type of text that you're adding - this mainly is here for SEO purposes. \
-**Text** - the text displayed by the widget \
+**Text** - the text displayed by the element \
 **Size** - size of the text (in pixels)
 
 ## Future features

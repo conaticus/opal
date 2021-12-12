@@ -1,6 +1,6 @@
-import { WidgetProperty } from "../types";
+import { ElementProperty } from "../types";
 
-const handleInspectorChange = (property: WidgetProperty<any>, ...data: any[]) => {
+const handleInspectorChange = (property: ElementProperty<any>, ...data: any[]) => {
     if (property.handleInspectorChange)
         property.handleInspectorChange(...data);
 }

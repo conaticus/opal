@@ -27,7 +27,7 @@ form.addEventListener("submit", async (e) => {
         return;
     }
 
-    const projectInfo = <ProjectInfo>{ name: projectName, widgets: [], isOpal: true };
+    const projectInfo = <ProjectInfo>{ name: projectName, elements: [], isOpal: true };
 
     await fs.writeFile(`${rootDir}/project-info.json`, JSON.stringify(projectInfo));
     await fs.chmod(`${rootDir}/project-info.json`, 444);
