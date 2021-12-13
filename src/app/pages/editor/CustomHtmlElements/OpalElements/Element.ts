@@ -12,10 +12,12 @@ export default abstract class Element extends CustomElement {
 
     static generateFromSave(elementSave: ElementSave): Element {
         let element: Element;
-        console.log(elementSave);
         switch (elementSave.type) {
-            case "TextElement":
+            case "TextBoxElement":
                 element = new TextElement();
+                break;
+            default:
+                throw new Error(`Could not find element with given type '${elementSave.type}'.`);
         }
 
         for (const propertyKey in elementSave.properties) {

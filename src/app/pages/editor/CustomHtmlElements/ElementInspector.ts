@@ -3,18 +3,19 @@ import Element from "./OpalElements/Element";
 import handleInspectorChange from "../util/handleInspectorChange";
 import camelToCapitalised from "../util/camelToCapitalised";
 import { ElementProperty, ElementPropertyChoice, ElementPropertyType } from "../types";
+import setContentEditableCursorEnd from "../util/setContentEditableCursorEnd";
 
 const MIN_TEXT_SIZE = "1";
 const MAX_TEXT_SIZE = "100";
 
 export default class ElementInspector extends CustomElement {
-    constructor(private element: Element) {
+    constructor(private opalElement: Element) {
         super();
         this.htmlElement.className = "element-inspector";
 
-        for (const propertyKey in element.propertyTypes) {
-            const property = element.properties[propertyKey];
-            const propertyType = element.propertyTypes[propertyKey];
+        for (const propertyKey in opalElement.propertyTypes) {
+            const property = opalElement.properties[propertyKey];
+            const propertyType = opalElement.propertyTypes[propertyKey];
 
             const propertyLabel = document.createElement("h4");
             propertyLabel.innerText = camelToCapitalised(propertyKey);
@@ -23,14 +24,14 @@ export default class ElementInspector extends CustomElement {
             const inspectorProperty = this.addInspectorProperty(property, propertyType);
             inspectorProperty.className = "element-inspector-child";
 
-            this.element.htmlElement.addEventListener("property-enabled", (e: CustomEvent) => {
+            this.opalElement.htmlElement.addEventListener("property-enabled", (e: CustomEvent) => {
                 if (e.detail.propertyKey === propertyKey) {
                     propertyLabel.style.display = "block";
                     inspectorProperty.style.display = "block";
                 }
             });
 
-            this.element.htmlElement.addEventListener("property-disabled", (e: CustomEvent) => {
+            this.opalElement.htmlElement.addEventListener("property-disabled", (e: CustomEvent) => {
                 if (e.detail.propertyKey === propertyKey) {
                     propertyLabel.style.display = "none";
                     inspectorProperty.style.display = "none";
@@ -56,7 +57,6 @@ export default class ElementInspector extends CustomElement {
     private addTextShort(property: ElementProperty<string>): HTMLElement {
         const inputElement = document.createElement("textarea");
         this.htmlElement.appendChild(inputElement);
-
         
         if (property.value)
             inputElement.value = property.value;
@@ -65,9 +65,10 @@ export default class ElementInspector extends CustomElement {
             handleInspectorChange(property, inputElement.value);
         });
 
-        this.element.htmlElement.addEventListener("input", () => {
-            handleInspectorChange(property, (this.element.htmlElement as any).value);
-            inputElement.value = (this.element as any).htmlElement.value;
+        this.opalElement.htmlElement.addEventListener("input", (e) => {
+            handleInspectorChange(property, this.opalElement.htmlElement.innerText);
+            setContentEditableCursorEnd(this.opalElement.htmlElement);
+            inputElement.value = this.opalElement.htmlElement.innerText;
         })
 
         return inputElement;
