@@ -23,7 +23,7 @@ const save = async (): Promise<void> => {
 
     setTimeout(() => {
         document.body.style.cursor = "default";
-    }, 50);
+    }, 100);
 }
 
 ipc.on("save", save);

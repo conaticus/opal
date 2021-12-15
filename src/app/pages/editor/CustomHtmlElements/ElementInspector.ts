@@ -4,6 +4,14 @@ import handleInspectorChange from "../util/handleInspectorChange";
 import camelToCapitalised from "../util/camelToCapitalised";
 import { ElementProperty, ElementPropertyChoice, ElementPropertyType } from "../types";
 import setContentEditableCursorEnd from "../util/setContentEditableCursorEnd";
+import Dropdown from "./Dropdown";
+
+interface CategoriesObject {
+    [key: string]: {
+        propertyLabel: HTMLHeadingElement;
+        inspectorProperty: HTMLElement;
+    }[];
+}
 
 const MIN_TEXT_SIZE = "1";
 const MAX_TEXT_SIZE = "100";
@@ -13,16 +21,20 @@ export default class ElementInspector extends CustomElement {
         super();
         this.htmlElement.className = "element-inspector";
 
+        const categories: CategoriesObject = {};
+
         for (const propertyKey in opalElement.propertyTypes) {
             const property = opalElement.properties[propertyKey];
             const propertyType = opalElement.propertyTypes[propertyKey];
 
             const propertyLabel = document.createElement("h4");
             propertyLabel.innerText = camelToCapitalised(propertyKey);
-            this.htmlElement.appendChild(propertyLabel);
 
             const inspectorProperty = this.addInspectorProperty(property, propertyType);
             inspectorProperty.className = "element-inspector-child";
+
+            if (!categories[property.categoryLabel]) categories[property.categoryLabel] = [];
+            categories[property.categoryLabel].push({ propertyLabel, inspectorProperty });
 
             this.opalElement.htmlElement.addEventListener("property-enabled", (e: CustomEvent) => {
                 if (e.detail.propertyKey === propertyKey) {
@@ -37,6 +49,17 @@ export default class ElementInspector extends CustomElement {
                     inspectorProperty.style.display = "none";
                 }
             })
+        }
+
+        for (const categoryLabel in categories) {
+            const dropdownChild = document.createElement("div");
+
+            categories[categoryLabel].forEach(({ propertyLabel, inspectorProperty }) => {
+                dropdownChild.appendChild(propertyLabel);
+                dropdownChild.appendChild(inspectorProperty);
+            })
+            
+            new Dropdown(categoryLabel, this.htmlElement, dropdownChild);
         }
     }
 
@@ -56,7 +79,6 @@ export default class ElementInspector extends CustomElement {
 
     private addTextShort(property: ElementProperty<string>): HTMLElement {
         const inputElement = document.createElement("textarea");
-        this.htmlElement.appendChild(inputElement);
         
         if (property.value)
             inputElement.value = property.value;
@@ -86,8 +108,6 @@ export default class ElementInspector extends CustomElement {
         }
 
         choiceElement.value = property.value.currentChoice;
-
-        this.htmlElement.appendChild(choiceElement);
         
         choiceElement.addEventListener("input", () => {
             handleInspectorChange(property, choiceElement.value);
@@ -115,8 +135,6 @@ export default class ElementInspector extends CustomElement {
 
         sliderElement.value = String(property.value);
         sliderInputElement.value = String(property.value);
-
-        this.htmlElement.appendChild(sliderParent);
 
         sliderElement.addEventListener("input", () => {
             sliderInputElement.value = sliderElement.value;
@@ -146,7 +164,6 @@ export default class ElementInspector extends CustomElement {
         booleanElement.type = "checkbox";
         booleanElement.checked = property.value;
         
-        this.htmlElement.appendChild(booleanElement);
         booleanElement.addEventListener("input", () => {
             handleInspectorChange(property, booleanElement.checked);
         })

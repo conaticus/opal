@@ -10,8 +10,8 @@ document.title = `Opal - ${projectInfo.name}`;
 projectInfo.elements.forEach(element => {
     const elementContainer = new ElementContainer(elementContainers.lastChild as HTMLDivElement);
     const generatedWidget = Element.generateFromSave(element);
-    elementContainer.addElement(generatedWidget);
     generatedWidget.loadProperties();
+    elementContainer.addElement(generatedWidget);
 })
 
 export { projectInfo };

@@ -1,12 +1,9 @@
-.element-container {
-    width: 25vw;
-    height: 50px;
-    border: solid 1px rgb(172, 172, 172);
-    padding: 10px;
-    margin: 10px auto;
+.element-containers {
+    width: 100%;
 }
 
 .text-box-element {
+    cursor: text;
     outline: none;
 }
 

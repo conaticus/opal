@@ -1,9 +1,9 @@
-import TextElement from "../CustomHtmlElements/OpalElements/TextElement";
+import TextElement from "../CustomHtmlElements/OpalElements/TextBoxElement";
 import { elements } from "../globals";
 import { TextType } from "../types";
 import save from "./save";
 
-const baseHTML = "<!DOCTYPE html><html lang='en'><html><body><style>h1 { font-weight: normal; margin: 0; } h2 { font-weight: normal; margin: 0; } h3 { font-weight: normal; margin: 0; } h4 { font-weight: normal; margin: 0; } h5 { font-weight: normal; margin: 0; } h6 { font-weight: normal; margin: 0; } p { font-weight: normal; margin: 0; } </style>";
+const baseHTML = "<!DOCTYPE html><html lang='en'><html><body><style>body { margin: 0; padding: 0; box-sizing: border-box; } h1 { font-weight: normal; margin: 0; } h2 { font-weight: normal; margin: 0; } h3 { font-weight: normal; margin: 0; } h4 { font-weight: normal; margin: 0; } h5 { font-weight: normal; margin: 0; } h6 { font-weight: normal; margin: 0; } p { font-weight: normal; margin: 0; } </style>";
 let body = "";
 const endingHTML = "</body></html>";
 
