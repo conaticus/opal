@@ -34,7 +34,7 @@ const appendTextElementSource = (element: TextElement): void => {
         default: return;
     }
 
-    body += `<${elementType} style=\"${element.properties.size.value ? `font-size: ${element.properties.size.value}px;` : ''}\">${element.properties.text.value}</${elementType}>` 
+    body += `<${elementType} style=\"font-weight: ${String(element.properties.weight.value.currentChoice)};${element.properties.size.value ? `font-size: ${element.properties.size.value}px;` : ''}\">${element.properties.text.value}</${elementType}>` 
 }
 
 const build = async (): Promise<void> => {
