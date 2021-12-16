@@ -6,11 +6,14 @@ import { ElementProperty, ElementPropertyChoice, ElementPropertyType } from "../
 import setContentEditableCursorEnd from "../util/setContentEditableCursorEnd";
 import Dropdown from "./Dropdown";
 
+interface Category {
+    propertyLabel: HTMLHeadingElement;
+    inspectorProperty: HTMLElement;
+    priority: number;
+}
+
 interface CategoriesObject {
-    [key: string]: {
-        propertyLabel: HTMLHeadingElement;
-        inspectorProperty: HTMLElement;
-    }[];
+    [key: string]: Category[]
 }
 
 const MIN_TEXT_SIZE = "1";
@@ -33,8 +36,8 @@ export default class ElementInspector extends CustomElement {
             const inspectorProperty = this.addInspectorProperty(property, propertyType);
             inspectorProperty.className = "element-inspector-child";
 
-            if (!categories[property.categoryLabel]) categories[property.categoryLabel] = [];
-            categories[property.categoryLabel].push({ propertyLabel, inspectorProperty });
+            if (!categories[property.category.label]) categories[property.category.label] = [];
+            categories[property.category.label].push({ propertyLabel, inspectorProperty, priority: property.category.priority });
 
             this.opalElement.htmlElement.addEventListener("property-enabled", (e: CustomEvent) => {
                 if (e.detail.propertyKey === propertyKey) {

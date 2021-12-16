@@ -32,6 +32,9 @@ form.addEventListener("submit", async (e) => {
     await fs.writeFile(`${rootDir}/project-info.json`, JSON.stringify(projectInfo));
     await fs.chmod(`${rootDir}/project-info.json`, 444);
 
+    await fs.mkdir(`${rootDir}/src`);
+    await fs.writeFile(`${rootDir}/src/opal.js`, "export const elements = {};");
+
     localStorage.setItem("currentProjectDirectory", rootDir);
     location.href = "../editor/index.html";
 })

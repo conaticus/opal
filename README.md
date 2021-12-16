@@ -23,7 +23,7 @@ Opal interprets all configurations and scripts and generates optimised website c
 ### Description
 Elements can be used by developers to add pieces of UI to a website. A element is a component of a website such as a button or pricing list. Each and every element consists of its own properties, which can be accessed through the inspector or via the API.
 
-### Text Element
+### Textbox Element
 
 A element that allows you to add text to your webpage.
 
@@ -32,8 +32,9 @@ A element that allows you to add text to your webpage.
 **Type** - the type of text that you're adding - this mainly is here for SEO purposes. \
 **Text** - the text displayed by the element \
 **Size** - size of the text (in pixels)
+**Weight** - weight of the text
 
 ## Future features
 
 ### Plugins
-There is a possibly that plugins will indeed be supported with Opal, especialy as it is open source. Developers will then have the option to create their own plugins and implement their own useful featuers to Opal, being able to share them with the community.
+There is a possibility that plugins will indeed be supported with Opal, especially as it is open source. Developers will then have the option to create their own plugins and implement their own useful featuers to Opal, being able to share them with the community.

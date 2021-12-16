@@ -1,6 +1,6 @@
-import { ElementProperties, ElementPropertyTypes, ElementSave } from "../../types";
+import { ElementProperties, ElementPropertyType, ElementPropertyTypes, ElementSave, ElementType } from "../../types";
 import CustomElement from "../CustomElement";
-import TextElement from "./TextBoxElement";
+import TextBoxElement from "./TextBoxElement";
 
 export default abstract class Element extends CustomElement {
     public properties: ElementProperties;
@@ -8,13 +8,18 @@ export default abstract class Element extends CustomElement {
     constructor(type: string = "div", public propertyTypes: ElementPropertyTypes) {
         super(type);
         this.properties = {};
+        this.propertyTypes.identifier = ElementPropertyType.TEXT_SHORT;
+
+        this.properties.identifier = { value: "", disabled: false, category: { label: "Element Settings", priority: 1 } };
+        this.initialiseProperties();
+        this.properties.identifier.handleInspectorChange = (value: string) => this.properties.identifier.value = value;
     }
 
     static generateFromSave(elementSave: ElementSave): Element {
         let element: Element;
         switch (elementSave.type) {
-            case "TextBoxElement":
-                element = new TextElement();
+            case ElementType.TextBox:
+                element = new TextBoxElement();
                 break;
             default:
                 throw new Error(`Could not find element with given type '${elementSave.type}'.`);

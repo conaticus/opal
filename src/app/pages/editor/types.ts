@@ -36,12 +36,13 @@ export interface ElementPropertyChoice {
 export interface ElementProperty<ValueType> {
     value: ValueType;
     disabled: boolean;
-    categoryLabel: string;
+    category: ElementPropertyCategory;
     handleInspectorChange?: Function;
 }
 
 export interface ElementProperties {
     [key: string]: ElementProperty<any>;
+    identifier?: ElementProperty<string>;
 }
 
 export interface TextElementProperties extends ElementProperties {
@@ -84,4 +85,13 @@ export enum FontWeight {
     SEVEN_HUNDRED = "700",
     EIGHT_HUNDRED = "800",
     NINE_HUNDRED = "900"
+}
+
+export interface ElementPropertyCategory {
+    label: string;
+    priority: number;
+}
+
+export enum ElementType {
+    TextBox = "TextBoxElement",
 }
