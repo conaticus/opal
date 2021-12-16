@@ -68,6 +68,8 @@ export default class ElementInspector extends CustomElement {
 
     private addInspectorProperty(property: ElementProperty<any>, type: ElementPropertyType): HTMLElement {
         switch (type) {
+            case ElementPropertyType.TEXT_EDITABLE:
+                return this.addTextEditable(property);
             case ElementPropertyType.TEXT_SHORT:
                 return this.addTextShort(property);
             case ElementPropertyType.CHOICE:
@@ -80,7 +82,7 @@ export default class ElementInspector extends CustomElement {
         }
     }
 
-    private addTextShort(property: ElementProperty<string>): HTMLElement {
+    private addTextEditable(property: ElementProperty<string>): HTMLElement {
         const inputElement = document.createElement("textarea");
         
         if (property.value)
@@ -94,6 +96,19 @@ export default class ElementInspector extends CustomElement {
             handleInspectorChange(property, this.opalElement.htmlElement.innerText);
             setContentEditableCursorEnd(this.opalElement.htmlElement);
             inputElement.value = this.opalElement.htmlElement.innerText;
+        })
+
+        return inputElement;
+    }
+
+    private addTextShort(property: ElementProperty<string>): HTMLElement {
+        const inputElement = document.createElement("input");
+
+        if (property.value)
+            inputElement.value = property.value;
+        
+        inputElement.addEventListener("input", () => {
+            handleInspectorChange(property, inputElement.value);
         })
 
         return inputElement;

@@ -19,6 +19,7 @@ declare global {
 
 export enum ElementPropertyType {
     TEXT_SHORT,
+    TEXT_EDITABLE,
     CHOICE,
     SLIDER,
     BOOLEAN,

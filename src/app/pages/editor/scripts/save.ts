@@ -10,7 +10,23 @@ const save = async (): Promise<void> => {
     
     projectInfo.elements = [];
 
-    let opalSrc = "export const elements = {";
+    let opalSrc = `
+        class TextBoxElement {
+            constructor(id) {
+                this.htmlElement = document.getElementById(id);
+            }
+
+            setText(value) {
+                this.htmlElement.innerText = value;
+            }
+
+            setWeight(value) {
+                this.htmlElement.style.fontWeight = String(value);
+            }
+        }
+
+        export const elements = {
+    `
 
     elements.forEach(element => {
         const elementSave = <ElementSave>{ properties: {}, propertyTypes: {} };
@@ -25,7 +41,7 @@ const save = async (): Promise<void> => {
 
         if (element.properties.identifier.value) {
             if (element instanceof TextBoxElement) {
-                opalSrc += `${toCamel(element.properties.identifier.value)}: { setText: (value) => { document.getElementById("${toDashes(element.properties.identifier.value)}").innerText = value } },`;
+                opalSrc += `${toCamel(element.properties.identifier.value)}: new TextBoxElement("${toDashes(element.properties.identifier.value)}"), `;
             }
         }
     })

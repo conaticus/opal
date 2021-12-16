@@ -34,6 +34,7 @@ form.addEventListener("submit", async (e) => {
 
     await fs.mkdir(`${rootDir}/src`);
     await fs.writeFile(`${rootDir}/src/opal.js`, "export const elements = {};");
+    await fs.writeFile(`${rootDir}/index.js`, "");
 
     localStorage.setItem("currentProjectDirectory", rootDir);
     location.href = "../editor/index.html";

@@ -9,7 +9,7 @@ export default class TextBoxElement extends Element {
     htmlElement: HTMLDivElement;
 
     constructor() {
-        super("div", { text: ElementPropertyType.TEXT_SHORT, size: ElementPropertyType.SLIDER, weight: ElementPropertyType.CHOICE,  type: ElementPropertyType.CHOICE, });
+        super("div", { text: ElementPropertyType.TEXT_EDITABLE, size: ElementPropertyType.SLIDER, weight: ElementPropertyType.CHOICE,  type: ElementPropertyType.CHOICE, });
         this.htmlElement.className = "text-box-element";
         this.htmlElement.contentEditable = "true";
 
