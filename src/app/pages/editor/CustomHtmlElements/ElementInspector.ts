@@ -35,7 +35,7 @@ export default class ElementInspector extends CustomElement {
             const propertyLabel = document.createElement("h4");
             propertyLabel.innerText = camelToCapitalised(propertyKey);
 
-            const inspectorProperty = this.addInspectorProperty(property, propertyType.type);
+            const inspectorProperty = this.createInspectorProperty(property, propertyType.type);
             inspectorProperty.className = "element-inspector-child";
 
             if (!categories[property.category.label]) {
@@ -75,23 +75,23 @@ export default class ElementInspector extends CustomElement {
         })
     }
 
-    private addInspectorProperty(property: ElementProperty<any>, type: ElementPropertyType): HTMLElement {
+    private createInspectorProperty(property: ElementProperty<any>, type: ElementPropertyType): HTMLElement {
         switch (type) {
             case ElementPropertyType.TEXT_EDITABLE:
-                return this.addTextEditable(property);
+                return this.createTextEditable(property);
             case ElementPropertyType.TEXT_SHORT:
-                return this.addTextShort(property);
+                return this.createTextShort(property);
             case ElementPropertyType.CHOICE:
-                return this.addChoice(property);
+                return this.createChoice(property);
             case ElementPropertyType.SLIDER:
-                return this.addSlider(property);
+                return this.createSlider(property);
             case ElementPropertyType.BOOLEAN:
-                return this.addBoolean(property);
+                return this.createBoolean(property);
             default: break;
         }
     }
 
-    private addTextEditable(property: ElementProperty<string>): HTMLElement {
+    private createTextEditable(property: ElementProperty<string>): HTMLElement {
         const inputElement = document.createElement("textarea");
         
         if (property.value)
@@ -110,7 +110,7 @@ export default class ElementInspector extends CustomElement {
         return inputElement;
     }
 
-    private addTextShort(property: ElementProperty<string>): HTMLElement {
+    private createTextShort(property: ElementProperty<string>): HTMLElement {
         const inputElement = document.createElement("input");
 
         if (property.value)
@@ -123,7 +123,7 @@ export default class ElementInspector extends CustomElement {
         return inputElement;
     }
 
-    private addChoice(property: ElementProperty<ElementPropertyChoice>): HTMLElement {
+    private createChoice(property: ElementProperty<ElementPropertyChoice>): HTMLElement {
         const choiceElement = document.createElement("select");
 
         for (const choiceKey in property.value.choiceEnum) {
@@ -143,7 +143,7 @@ export default class ElementInspector extends CustomElement {
         return choiceElement;
     }
 
-    private addSlider(property: ElementProperty<number>): HTMLElement {
+    private createSlider(property: ElementProperty<number>): HTMLElement {
         const sliderParent = document.createElement("div");
         sliderParent.style.display = "flex";
 
@@ -186,7 +186,7 @@ export default class ElementInspector extends CustomElement {
         return sliderParent;
     }
 
-    private addBoolean(property: ElementProperty<boolean>): HTMLElement {
+    private createBoolean(property: ElementProperty<boolean>): HTMLElement {
         const booleanElement = document.createElement("input");
         booleanElement.type = "checkbox";
         booleanElement.checked = property.value;

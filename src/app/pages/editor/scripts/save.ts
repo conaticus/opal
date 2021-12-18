@@ -5,28 +5,18 @@ import toCamel from "../util/toCamel";
 import toDashes from "../util/toDashes";
 import { projectInfo } from "./load";
 
+const apiTemplate = fsSync.readFileSync("./src/opalApiTemplate.js", "utf-8");
+
 const save = async (): Promise<void> => {
     document.body.style.cursor = "progress";
     
     projectInfo.elements = [];
 
     let opalSrc = `
-        class TextBoxElement {
-            constructor(id) {
-                this.htmlElement = document.getElementById(id);
-            }
+${apiTemplate}
 
-            setText(value) {
-                this.htmlElement.innerText = value;
-            }
-
-            setWeight(value) {
-                this.htmlElement.style.fontWeight = String(value);
-            }
-        }
-
-        export const elements = {
-    `
+export const elements = {
+`
 
     elements.forEach(element => {
         const elementSave = <ElementSave>{ properties: {}, propertyTypes: {} };

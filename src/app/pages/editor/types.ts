@@ -8,9 +8,7 @@ export type { OpenDialogOptions } from "electron";
 declare global {
     const ipc: IpcRenderer;
     const fs: typeof filesystem;
-    const fsSync: {
-        readFile: typeof filesystemSync.readFileSync;
-    }
+    const fsSync: typeof filesystemSync;
     const shell: {
         openExternal: typeof sh.openExternal;
         showItemInFolder: typeof sh.showItemInFolder;

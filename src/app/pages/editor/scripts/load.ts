@@ -3,7 +3,7 @@ import Element from "../CustomHtmlElements/OpalElements/Element";
 import { ProjectInfo } from "../types";
 import { elementContainers } from "./preview";
 
-const projectInfoRaw = fsSync.readFile(`${localStorage.getItem("currentProjectDirectory")}/project-info.json`, "utf8");
+const projectInfoRaw = fsSync.readFileSync(`${localStorage.getItem("currentProjectDirectory")}/project-info.json`, "utf8");
 const projectInfo = <ProjectInfo>JSON.parse(projectInfoRaw);
 document.title = `Opal - ${projectInfo.name}`;
 
