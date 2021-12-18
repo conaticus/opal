@@ -25,10 +25,12 @@ export default class ElementContainer extends CustomElement {
         });
 
         this.htmlElement.addEventListener("dragenter", () => {
+            if (this.occupied) return;
             this.htmlElement.style.border = "solid 1px #0084ff";
         })
 
         this.htmlElement.addEventListener("dragleave", () => {
+            if (this.occupied) return;
             this.htmlElement.style.border = "none";
         })
 

@@ -1,4 +1,4 @@
-import { IpcRenderer } from "electron";
+import { IpcRenderer, JumpListCategory } from "electron";
 import * as filesystem from "fs/promises";
 import * as filesystemSync from "fs";
 import { shell as sh } from "electron";
@@ -26,7 +26,11 @@ export enum ElementPropertyType {
 }
 
 export interface ElementPropertyTypes {
-    [key: string]: ElementPropertyType;
+    [key: string]: {
+        type: ElementPropertyType;
+        category: ElementPropertyCategory;
+        choiceEnum?: any;
+    };
 }
 
 export interface ElementPropertyChoice {
@@ -35,7 +39,7 @@ export interface ElementPropertyChoice {
 }
 
 export interface ElementProperty<ValueType> {
-    value: ValueType;
+    value?: ValueType;
     disabled: boolean;
     category: ElementPropertyCategory;
     handleInspectorChange?: Function;

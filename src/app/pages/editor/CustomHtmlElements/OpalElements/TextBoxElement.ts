@@ -1,5 +1,4 @@
-import { ElementPropertyCategory, ElementPropertyType, FontWeight, TextElementProperties, TextType } from "../../types";
-import pxToNumber from "../../util/pxToNumber";
+import { ElementPropertyCategory, ElementPropertyType, ElementPropertyTypes, FontWeight, TextElementProperties, TextType } from "../../types";
 import Element from "./Element";
 
 const DEFAULT_TEXT_SIZE = 18;
@@ -9,7 +8,33 @@ export default class TextBoxElement extends Element {
     htmlElement: HTMLDivElement;
 
     constructor() {
-        super("div", { text: ElementPropertyType.TEXT_EDITABLE, size: ElementPropertyType.SLIDER, weight: ElementPropertyType.CHOICE,  type: ElementPropertyType.CHOICE, });
+        const generalCategory: ElementPropertyCategory = { label: "General", priority: 2 };
+        const typographyCategory: ElementPropertyCategory = { label: "Typography", priority: 3 };
+        const seoCategory: ElementPropertyCategory = { label: "SEO", priority: 4 };
+
+        const propertyTypes: ElementPropertyTypes = {
+            text: {
+                type: ElementPropertyType.TEXT_EDITABLE,
+                category: generalCategory
+            },
+            size: {
+                type: ElementPropertyType.SLIDER,
+                category: typographyCategory
+            },
+            weight: {
+                type: ElementPropertyType.CHOICE,
+                category: typographyCategory,
+                choiceEnum: FontWeight
+            },
+            type: {
+                type: ElementPropertyType.CHOICE,
+                category: seoCategory,
+                choiceEnum: TextType
+            }
+        }
+
+        super("div", propertyTypes);
+
         this.htmlElement.className = "text-box-element";
         this.htmlElement.contentEditable = "true";
 
@@ -22,17 +47,6 @@ export default class TextBoxElement extends Element {
         this.properties.size.handleInspectorChange = (value: number) => this.setSize(value);
         this.properties.weight.handleInspectorChange = (value: FontWeight) => this.setWeight(value);
         this.properties.type.handleInspectorChange = (value: TextType) => this.setType(value);
-    }
-
-    protected initialiseProperties(): void {
-        const generalCategory: ElementPropertyCategory = { label: "General", priority: 2 };
-        const typographyCategory: ElementPropertyCategory = { label: "Typography", priority: 3 };
-        const seoCategory: ElementPropertyCategory = { label: "SEO", priority: 4 };
-
-        this.properties.text = { value: "", disabled: false, category: generalCategory };
-        this.properties.size = { value: pxToNumber(this.htmlElement.style.fontSize), disabled: false, category: typographyCategory };
-        this.properties.weight = { value: { choiceEnum: FontWeight }, disabled: false, category: typographyCategory };
-        this.properties.type = { value: { choiceEnum: TextType }, disabled: false, category: seoCategory };
     }
 
     public setText(value: string): void {

@@ -9,7 +9,7 @@ export default class AddElementMenu extends SidenavMenu {
         super("Add Element");
 
         const typographyGrid = new Grid();
-        this.addElement("Text", TextElement, typographyGrid);
+        this.addElement("Textbox", TextElement, typographyGrid);
         // this.addElement("Heading");
         // this.addElement("Paragraph");
 

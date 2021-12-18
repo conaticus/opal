@@ -6,14 +6,16 @@ import { ElementProperty, ElementPropertyChoice, ElementPropertyType } from "../
 import setContentEditableCursorEnd from "../util/setContentEditableCursorEnd";
 import Dropdown from "./Dropdown";
 
-interface Category {
+interface CategoryProperty {
     propertyLabel: HTMLHeadingElement;
     inspectorProperty: HTMLElement;
-    priority: number;
 }
 
-interface CategoriesObject {
-    [key: string]: Category[]
+interface Categories {
+    [key: string]: {
+        categoryProperties: CategoryProperty[];
+        priority: number;
+    }
 }
 
 const MIN_TEXT_SIZE = "1";
@@ -24,7 +26,7 @@ export default class ElementInspector extends CustomElement {
         super();
         this.htmlElement.className = "element-inspector";
 
-        const categories: CategoriesObject = {};
+        const categories: Categories = {};
 
         for (const propertyKey in opalElement.propertyTypes) {
             const property = opalElement.properties[propertyKey];
@@ -33,11 +35,17 @@ export default class ElementInspector extends CustomElement {
             const propertyLabel = document.createElement("h4");
             propertyLabel.innerText = camelToCapitalised(propertyKey);
 
-            const inspectorProperty = this.addInspectorProperty(property, propertyType);
+            const inspectorProperty = this.addInspectorProperty(property, propertyType.type);
             inspectorProperty.className = "element-inspector-child";
 
-            if (!categories[property.category.label]) categories[property.category.label] = [];
-            categories[property.category.label].push({ propertyLabel, inspectorProperty, priority: property.category.priority });
+            if (!categories[property.category.label]) {
+                categories[property.category.label] = {
+                    categoryProperties: [],
+                    priority: property.category.priority,
+                }
+            }
+
+            categories[property.category.label].categoryProperties.push({ propertyLabel, inspectorProperty });
 
             this.opalElement.htmlElement.addEventListener("property-enabled", (e: CustomEvent) => {
                 if (e.detail.propertyKey === propertyKey) {
@@ -54,16 +62,17 @@ export default class ElementInspector extends CustomElement {
             })
         }
 
-        for (const categoryLabel in categories) {
+        const sortedCategories = Object.keys(categories).sort((a, b) => categories[a].priority - categories[b].priority);
+        sortedCategories.forEach(categoryLabel => {
             const dropdownChild = document.createElement("div");
 
-            categories[categoryLabel].forEach(({ propertyLabel, inspectorProperty }) => {
+            categories[categoryLabel].categoryProperties.forEach(({ propertyLabel, inspectorProperty }) => {
                 dropdownChild.appendChild(propertyLabel);
                 dropdownChild.appendChild(inspectorProperty);
             })
-            
+
             new Dropdown(categoryLabel, this.htmlElement, dropdownChild);
-        }
+        })
     }
 
     private addInspectorProperty(property: ElementProperty<any>, type: ElementPropertyType): HTMLElement {

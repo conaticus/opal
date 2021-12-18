@@ -1,4 +1,4 @@
-import { ElementProperties, ElementPropertyType, ElementPropertyTypes, ElementSave, ElementType } from "../../types";
+import { ElementProperties, ElementProperty, ElementPropertyType, ElementPropertyTypes, ElementSave, ElementType } from "../../types";
 import CustomElement from "../CustomElement";
 import TextBoxElement from "./TextBoxElement";
 
@@ -8,10 +8,10 @@ export default abstract class Element extends CustomElement {
     constructor(type: string = "div", public propertyTypes: ElementPropertyTypes) {
         super(type);
         this.properties = {};
-        this.propertyTypes.identifier = ElementPropertyType.TEXT_SHORT;
+        this.propertyTypes.identifier = { type: ElementPropertyType.TEXT_SHORT, category: { label: "Element Settings", priority: 1 } };
 
-        this.properties.identifier = { value: "", disabled: false, category: { label: "Element Settings", priority: 1 } };
         this.initialiseProperties();
+
         this.properties.identifier.handleInspectorChange = (value: string) => this.properties.identifier.value = value;
     }
 
@@ -47,6 +47,25 @@ export default abstract class Element extends CustomElement {
         this.htmlElement.dispatchEvent(disableEvent);
     }
 
+    private initialiseProperties(): void {
+        for (const propertyKey in this.propertyTypes) {
+            const propertyType = this.propertyTypes[propertyKey];
+
+            const property: ElementProperty<any> = {
+                disabled: false,
+                category: propertyType.category,
+            }
+
+            if (propertyType.type === ElementPropertyType.CHOICE) {
+                if (!propertyType.choiceEnum)
+                    throw new Error("Choice property has no choice enum.");
+
+                property.value = { choiceEnum: propertyType.choiceEnum };
+            }
+
+            this.properties[propertyKey] = property;
+        }
+    }
+
     public abstract loadProperties(): void;
-    protected abstract initialiseProperties(): void;
 }
