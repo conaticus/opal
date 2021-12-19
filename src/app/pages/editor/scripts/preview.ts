@@ -30,7 +30,9 @@ const createElementContainer = (): void => {
             showElementInspector(elementInspector);
         })
 
-        appendCustomHtmlElement(inspector, elementInspector);
+        inspector.titleText = e.detail.element.constructor.name;
+
+        appendCustomHtmlElement(inspector.htmlElement, elementInspector);
         createElementContainer();
     })
 }

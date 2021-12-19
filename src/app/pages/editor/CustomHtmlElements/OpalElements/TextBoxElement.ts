@@ -18,7 +18,7 @@ export default class TextBoxElement extends Element {
                 category: generalCategory
             },
             size: {
-                type: ElementPropertyType.SLIDER,
+                type: ElementPropertyType.NUMBER,
                 category: typographyCategory
             },
             weight: {

@@ -1,6 +1,6 @@
 import IconButton from "../CustomHtmlElements/IconButton";
-import AddElementMenu from "../CustomHtmlElements/SidenavMenus/AddElementMenu";
-import SidenavMenu from "../CustomHtmlElements/SidenavMenus/SidenavMenu";
+import AddElementMenu from "../CustomHtmlElements/Menus/AddElementMenu";
+import SidenavMenu from "../CustomHtmlElements/Menus/Menu";
 import appendCustomHtmlElement from "../util/appendCustomHtmlElement";
 
 interface SidenavButton {

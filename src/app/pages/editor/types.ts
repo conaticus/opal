@@ -1,4 +1,4 @@
-import { IpcRenderer, JumpListCategory } from "electron";
+import { IpcRenderer } from "electron";
 import * as filesystem from "fs/promises";
 import * as filesystemSync from "fs";
 import { shell as sh } from "electron";
@@ -19,7 +19,7 @@ export enum ElementPropertyType {
     TEXT_SHORT,
     TEXT_EDITABLE,
     CHOICE,
-    SLIDER,
+    NUMBER,
     BOOLEAN,
 }
 

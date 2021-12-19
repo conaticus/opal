@@ -1,5 +1,7 @@
-.inspector {
+.inspector-property {
     text-align: center;
+    display: flex;
+    align-items: center;
 }
 
 .element-inspector-child {

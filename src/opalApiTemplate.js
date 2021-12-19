@@ -20,23 +20,23 @@ export class Element {
         this.htmlElement.style.display = "none";
     }
 
-    setBackgroundColor(color) {
+    set backgroundColor(color) {
         this.htmlElement.style.backgroundColor = color;
     }
 
-    setBorderColor(color) {
+    set borderColor(color) {
         this.htmlElement.style.borderColor = color;
     }
 
-    setBorderWidth(width) {
+    set borderWidth(width) {
         this.htmlElement.style.borderWidth = width + "px";
     }
 
-    setBorderRadius(radius) {
+    set borderRadius(radius) {
         this.htmlElement.style.borderRadius = radius + "px";
     }
 
-    setCursor(type) {
+    set cursor(type) {
         this.htmlElement.style.cursor = type;
     }
 
@@ -44,15 +44,15 @@ export class Element {
 }
 
 export class TextBoxElement extends Element {
-    setText(value) {
+    set text(value) {
         this.htmlElement.innerText = value;
     }
 
-    setWeight(value) {
+    set weight(value) {
         this.htmlElement.style.fontWeight = value + "px";
     }
 
-    setColor(color) {
+    set color(color) {
         this.htmlElement.style.color = color;
     }
 }

@@ -1,5 +1,3 @@
-import build from "./build";
-
 ipc.on("open-menu", () => {
     location.href = "../menu/index.html";
 })
@@ -9,9 +7,7 @@ ipc.on("new-project", () => {
 })
 
 ipc.on("preview-site", () => {
-    build();
-    const url = `${localStorage.getItem("currentProjectDirectory")}/index.html`;
-    shell.openExternal(url);
+    shell.openExternal("http://localhost:8080");
 })
 
 ipc.on("open-project-directory", () => {

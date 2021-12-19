@@ -26,7 +26,7 @@ h3 {
 h4 {
     margin: 0;
     font-weight: 400;
-    font-size: 25px;
+    font-size: 20px;
 }
 
 h5 {
@@ -41,4 +41,22 @@ h6 {
 
 p {
     margin: 0;
+}
+
+input[type=text], input[type=number], textarea, select {
+    width: 180px;
+    background-color: #242424;
+    border: solid 1px black;
+    border-radius: 3px;
+    outline: none;
+    color: white;
+}
+
+input[type=text], input[type=number] {
+    height: 20px;
+}
+
+textarea {
+    height: 50px;
+    font-family: 'Lato', sans-serif;
 }

@@ -1,10 +1,10 @@
 import Dropdown from "../Dropdown";
 import Element from "../OpalElements/Element";
 import Grid from "../Grid";
-import SidenavMenu from "./SidenavMenu";
+import Menu from "./Menu";
 import TextElement from "../OpalElements/TextBoxElement";
 
-export default class AddElementMenu extends SidenavMenu {
+export default class AddElementMenu extends Menu {
     constructor() {
         super("Add Element");
 

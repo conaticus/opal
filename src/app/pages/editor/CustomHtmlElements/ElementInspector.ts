@@ -34,6 +34,8 @@ export default class ElementInspector extends CustomElement {
 
             const propertyLabel = document.createElement("h4");
             propertyLabel.innerText = camelToCapitalised(propertyKey);
+            propertyLabel.style.color = "#C5C5C5";
+            propertyLabel.style.fontSize = "15px";
 
             const inspectorProperty = this.createInspectorProperty(property, propertyType.type);
             inspectorProperty.className = "element-inspector-child";
@@ -65,6 +67,7 @@ export default class ElementInspector extends CustomElement {
         const sortedCategories = Object.keys(categories).sort((a, b) => categories[a].priority - categories[b].priority);
         sortedCategories.forEach(categoryLabel => {
             const dropdownChild = document.createElement("div");
+            dropdownChild.className = "inspector-property";
 
             categories[categoryLabel].categoryProperties.forEach(({ propertyLabel, inspectorProperty }) => {
                 dropdownChild.appendChild(propertyLabel);
@@ -83,8 +86,8 @@ export default class ElementInspector extends CustomElement {
                 return this.createTextShort(property);
             case ElementPropertyType.CHOICE:
                 return this.createChoice(property);
-            case ElementPropertyType.SLIDER:
-                return this.createSlider(property);
+            case ElementPropertyType.NUMBER:
+                return this.createNumber(property);
             case ElementPropertyType.BOOLEAN:
                 return this.createBoolean(property);
             default: break;
@@ -112,6 +115,7 @@ export default class ElementInspector extends CustomElement {
 
     private createTextShort(property: ElementProperty<string>): HTMLElement {
         const inputElement = document.createElement("input");
+        inputElement.type = "text";
 
         if (property.value)
             inputElement.value = property.value;
@@ -143,47 +147,22 @@ export default class ElementInspector extends CustomElement {
         return choiceElement;
     }
 
-    private createSlider(property: ElementProperty<number>): HTMLElement {
-        const sliderParent = document.createElement("div");
-        sliderParent.style.display = "flex";
+    private createNumber(property: ElementProperty<number>): HTMLElement {
+        const inputElement = document.createElement("input");
+        inputElement.type = "number";
+        inputElement.min = MIN_TEXT_SIZE;
+        inputElement.max = MAX_TEXT_SIZE;
 
-        const sliderElement = document.createElement("input");
-        sliderElement.type = "range";
-        sliderElement.min = MIN_TEXT_SIZE;
-        sliderElement.max = MAX_TEXT_SIZE;
+        inputElement.value = String(property.value);
 
-        const sliderInputElement = document.createElement("input");
-        sliderInputElement.type = "number";
-        sliderInputElement.min = MIN_TEXT_SIZE;
-        sliderElement.max = MAX_TEXT_SIZE;
+        inputElement.addEventListener("input", () => {
+            if (Number(inputElement.value) > Number(MAX_TEXT_SIZE)) inputElement.value = MAX_TEXT_SIZE;
+            else if (Number(inputElement.value) < Number(MIN_TEXT_SIZE) && inputElement.value !== "") inputElement.value = MIN_TEXT_SIZE;
 
-        sliderParent.appendChild(sliderElement);
-        sliderParent.appendChild(sliderInputElement);
-
-        sliderElement.value = String(property.value);
-        sliderInputElement.value = String(property.value);
-
-        sliderElement.addEventListener("input", () => {
-            sliderInputElement.value = sliderElement.value;
-            handleInspectorChange(property, sliderElement.value);
+            handleInspectorChange(property, Number(inputElement.value));
         })
 
-        sliderInputElement.addEventListener("input", () => {
-            if (Number(sliderInputElement.value) < Number(MIN_TEXT_SIZE) && sliderInputElement.value !== "") {
-                sliderInputElement.value = MIN_TEXT_SIZE;
-                return;
-            } else if (Number(sliderInputElement.value) > Number(MAX_TEXT_SIZE)) {
-                sliderInputElement.value = MAX_TEXT_SIZE;
-                return;
-            }
-
-            sliderElement.value = sliderInputElement.value;
-            let sliderElementValue = sliderInputElement.value;
-            if (sliderElementValue === "") sliderElementValue = "1"; 
-            handleInspectorChange(property, sliderElementValue);
-        })
-
-        return sliderParent;
+        return inputElement;
     }
 
     private createBoolean(property: ElementProperty<boolean>): HTMLElement {
