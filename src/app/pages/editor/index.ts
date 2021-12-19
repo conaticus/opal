@@ -10,3 +10,7 @@ import "./scripts/inspector";
 import "./scripts/load";
 
 ipc.invoke("editor-load", localStorage.getItem("currentProjectDirectory"));
+
+addEventListener("beforeunload", () => {
+    ipc.invoke("editor-unload");
+})
