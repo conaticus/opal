@@ -1,4 +1,5 @@
 import { OpenDialogOptions, ProjectInfo } from "../editor/types";
+import { setState } from "../editor/util/state";
 
 const form = document.getElementById("new-project-form");
 const projectDirectoryInput = <HTMLInputElement>document.getElementById("project-directory-input");
@@ -14,8 +15,8 @@ projectDirDialogButton.addEventListener("click", async (e) => {
 form.addEventListener("submit", async (e) => {
     e.preventDefault();
     const projectName = (document.getElementById("project-name-input") as HTMLInputElement).value;
-
     const rootDir = projectDirectoryInput.value;
+
     try {
         await fs.access(rootDir);    
     } catch {
@@ -36,6 +37,6 @@ form.addEventListener("submit", async (e) => {
     await fs.writeFile(`${rootDir}/src/opal.js`, "export const elements = {};");
     await fs.writeFile(`${rootDir}/index.js`, "");
 
-    localStorage.setItem("currentProjectDirectory", rootDir);
+    await setState("currentProjectDirectory", rootDir);
     location.href = "../editor/index.html";
 })

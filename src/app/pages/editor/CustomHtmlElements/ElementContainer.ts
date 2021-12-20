@@ -1,8 +1,9 @@
-import { elements } from "../globals";
 import CustomElement from "./CustomElement";
-import TextElement from "./OpalElements/TextBoxElement";
+import TextElement from "./OpalElements/Text/TextboxElement";
 import Element from "./OpalElements/Element";
 import appendCustomHtmlElement from "../util/appendCustomHtmlElement";
+import { getState } from "../util/state";
+import { addElementToState } from "../util/globals";
 
 export default class ElementContainer extends CustomElement {
     public occupied: boolean;
@@ -35,13 +36,12 @@ export default class ElementContainer extends CustomElement {
         })
 
 
-        this.htmlElement.addEventListener("drop", (e) => {
+        this.htmlElement.addEventListener("drop", async (e) => {
             if (this.occupied) return;
             e.preventDefault();
             const elementType = e.dataTransfer.getData("element-type");
-            this.createElement(elementType);
+            await this.createElement(elementType);
         }, { once: true });
-
     }
 
     private elementAdded(): void {
@@ -56,7 +56,7 @@ export default class ElementContainer extends CustomElement {
         })
     }
 
-    private createElement(elementType: string): void {
+    private async createElement(elementType: string): Promise<void> {
         let element: Element;
 
         switch (elementType) {
@@ -67,11 +67,11 @@ export default class ElementContainer extends CustomElement {
                 return;
         }
 
-        this.addElement(element);
+        await this.addElement(element);
     }
 
-    public addElement(element: Element): void {
-        elements.push(element);
+    public async addElement(element: Element): Promise<void> {
+        await addElementToState(element);
         appendCustomHtmlElement(this.htmlElement, element);
         this.elementAdded();
         this.occupied = true;

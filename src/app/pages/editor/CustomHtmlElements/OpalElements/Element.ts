@@ -1,6 +1,6 @@
 import { ElementProperties, ElementProperty, ElementPropertyType, ElementPropertyTypes, ElementSave, ElementType } from "../../types";
 import CustomElement from "../CustomElement";
-import TextBoxElement from "./TextBoxElement";
+import TextBoxElement from "./Text/TextboxElement";
 
 export default abstract class Element extends CustomElement {
     public properties: ElementProperties;

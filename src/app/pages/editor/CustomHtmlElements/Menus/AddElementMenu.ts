@@ -2,7 +2,7 @@ import Dropdown from "../Dropdown";
 import Element from "../OpalElements/Element";
 import Grid from "../Grid";
 import Menu from "./Menu";
-import TextElement from "../OpalElements/TextBoxElement";
+import TextElement from "../OpalElements/Text/TextboxElement";
 
 export default class AddElementMenu extends Menu {
     constructor() {

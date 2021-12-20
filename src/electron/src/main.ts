@@ -1,4 +1,4 @@
-import { app, BrowserWindow, globalShortcut, ipcMain, Menu, nativeTheme } from "electron";
+import { app, BrowserWindow, globalShortcut, Menu, nativeTheme } from "electron";
 import menu from "./menu";
 import * as path from "path";
 import attatchIpcListeners from "./attachIpcListeners";

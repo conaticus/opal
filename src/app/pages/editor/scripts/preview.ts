@@ -39,4 +39,4 @@ const createElementContainer = (): void => {
 
 createElementContainer();
 
-export { elementContainers };
+export { elementContainers, createElementContainer };

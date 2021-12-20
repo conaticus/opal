@@ -1,16 +1,28 @@
-import "./scripts/sidenav";
-import "./scripts/preview";
+import createSidenav from "./scripts/sidenav";;
+import { createElementContainer } from "./scripts/preview";
+import attatchEventListeners from "./scripts/attatchEventListeners";
+import attachIpcListeners from "./scripts/attatchIpcListeners";
+import load from "./scripts/load";
+import { getState, setState } from "./util/state";
+
 import "./scripts/save";
 import "./scripts/build";
-import "./scripts/ipcListeners";
-import "./scripts/attatchEventListeners";
-import "./scripts/inspector";
 
-// Important this is imported last
-import "./scripts/load";
+const loadEditor = async (): Promise<void> => {
+    await setState("elements", []);
+    await load();
 
-ipc.invoke("editor-load", localStorage.getItem("currentProjectDirectory"));
+    createSidenav();
+    createElementContainer();
 
-addEventListener("beforeunload", () => {
-    ipc.invoke("editor-unload");
-})
+    attatchEventListeners();
+    attachIpcListeners();
+
+    ipc.invoke("editor-load", await getState("currentProjectDirectory"));
+
+    addEventListener("beforeunload", () => {
+        ipc.invoke("editor-unload");
+    })
+}
+
+loadEditor();

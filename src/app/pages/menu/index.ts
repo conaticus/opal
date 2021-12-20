@@ -1,4 +1,5 @@
 import { OpenDialogOptions, ProjectInfo } from "../editor/types";
+import { setState } from "../editor/util/state";
 
 const openProjectButton = document.getElementById("open-project-btn");
 
@@ -8,7 +9,7 @@ openProjectButton.addEventListener("click", async () => {
     const projectInfo: ProjectInfo = JSON.parse(projectInfoRaw);
 
     if (projectInfo.isOpal) {
-        localStorage.setItem("currentProjectDirectory", dialogChoice);
+        await setState("currentProjectDirectory", dialogChoice);
         location.href = "../editor/index.html";
     } else {
         alert("ERROR: Project is not an Opal project.");

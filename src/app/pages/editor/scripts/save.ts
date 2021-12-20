@@ -1,15 +1,16 @@
-import TextBoxElement from "../CustomHtmlElements/OpalElements/TextBoxElement";
-import { elements } from "../globals";
-import { ElementSave } from "../types";
+import TextBoxElement from "../CustomHtmlElements/OpalElements/Text/TextboxElement";
+import { ElementSave, ProjectInfo } from "../types";
+import { getElements } from "../util/globals";
+import { getState } from "../util/state";
 import toCamel from "../util/toCamel";
 import toDashes from "../util/toDashes";
-import { projectInfo } from "./load";
 
 const apiTemplate = fsSync.readFileSync("./src/opalApiTemplate.js", "utf-8");
 
 const save = async (): Promise<void> => {
     document.body.style.cursor = "progress";
     
+    const projectInfo: ProjectInfo = await getState("projectInfo");
     projectInfo.elements = [];
 
     let opalSrc = `
@@ -17,6 +18,8 @@ ${apiTemplate}
 
 export const elements = {
 `
+
+    const elements = await getElements();
 
     elements.forEach(element => {
         const elementSave = <ElementSave>{ properties: {}, propertyTypes: {} };
@@ -38,8 +41,8 @@ export const elements = {
 
     opalSrc += "};";
 
-    await fs.writeFile(`${localStorage.getItem("currentProjectDirectory")}/project-info.json`, JSON.stringify(projectInfo));
-    await fs.writeFile(`${localStorage.getItem("currentProjectDirectory")}/src/opal.js`, opalSrc);
+    await fs.writeFile(`${await getState("projectInfo")}/project-info.json`, JSON.stringify(projectInfo));
+    await fs.writeFile(`${await getState("projectInfo")}/src/opal.js`, opalSrc);
 
     setTimeout(() => {
         document.body.style.cursor = "default";

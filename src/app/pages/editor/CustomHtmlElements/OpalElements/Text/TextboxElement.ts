@@ -1,9 +1,9 @@
-import { ElementPropertyCategory, ElementPropertyType, ElementPropertyTypes, FontWeight, TextElementProperties, TextType } from "../../types";
-import Element from "./Element";
+import { ElementPropertyCategory, ElementPropertyType, ElementPropertyTypes, FontWeight, TextElementProperties, TextType } from "../../../types";
+import Element from "../Element";
 
 const DEFAULT_TEXT_SIZE = 18;
 
-export default class TextBoxElement extends Element {
+export default class TextboxElement extends Element {
     properties: TextElementProperties;
     htmlElement: HTMLDivElement;
 

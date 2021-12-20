@@ -3,6 +3,7 @@ import * as express from "express";
 import { Server } from "http";
 
 let openServer: Server;
+const state: any = {};
 
 const attatchIpcListeners = (): void => {
     ipcMain.handle("request-dialog-choice", async (_, options) => {
@@ -18,6 +19,14 @@ const attatchIpcListeners = (): void => {
 
     ipcMain.handle("editor-unload", () => {
         openServer.close();
+    })
+
+    ipcMain.handle("set-state", (_, { property, value }) => {
+        state[property] = value;
+    });
+
+    ipcMain.handle("get-state", (_, property) => {
+        return state[property];
     })
 }
 

@@ -49,16 +49,30 @@ Opal is entirely, 100% free for non commercial use, and is open source. This all
 ### Description
 Elements can be used by developers to add pieces of UI to a website. A element is a component of a website such as a button or pricing list. Each and every element consists of its own properties, which can be accessed through the inspector or via the API.
 
-### Textbox Element
+### Typography
+
+#### Textbox
 
 A element that allows you to add text to your webpage.
 
-#### Properties
+##### Properties
 
 **Type** - the type of text that you're adding - this mainly is here for SEO purposes. \
 **Text** - the text displayed by the element \
 **Size** - size of the text (in pixels)
 **Weight** - weight of the text
+
+### Layout
+
+#### Column
+
+A container that allows elements to be placed in a vertical order.
+
+### Row
+
+A container that allows elements to be placed in a horizontal order.
+
+#### Properties
 
 ## Future features
 

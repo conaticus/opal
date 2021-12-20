@@ -1,6 +1,6 @@
-import TextElement from "../CustomHtmlElements/OpalElements/TextBoxElement";
-import { elements } from "../globals";
+import TextElement from "../CustomHtmlElements/OpalElements/Text/TextboxElement";
 import { TextType } from "../types";
+import { getState } from "../util/state";
 import toDashes from "../util/toDashes";
 import save from "./save";
 
@@ -39,12 +39,14 @@ const appendTextElementSource = (element: TextElement): void => {
 }
 
 const build = async (): Promise<void> => {
-    save();
+    await save();
+    const elements: Element[] = await getState("elements");
+    
     elements.forEach(element => {
         if (element instanceof TextElement) appendTextElementSource(element);
     })
 
-    await fs.writeFile(`${localStorage.getItem("currentProjectDirectory")}/index.html`, baseHTML + body + endingHTML);
+    await fs.writeFile(`${await getState("currentProjectDirectory")}/index.html`, baseHTML + body + endingHTML);
     body = "";
 }
 
