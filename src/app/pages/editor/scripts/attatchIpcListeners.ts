@@ -1,4 +1,4 @@
-import { getState } from "../util/state";
+import { state } from "../util/state";
 
 const attatchIpcListeners = (): void => {
     ipc.on("open-menu", () => {
@@ -14,7 +14,7 @@ const attatchIpcListeners = (): void => {
     })
 
     ipc.on("open-project-directory", async () => {
-        shell.showItemInFolder(await getState("currentProjectDirectory"));
+        shell.showItemInFolder(state.currentProjectDirectory);
     })
 }
 

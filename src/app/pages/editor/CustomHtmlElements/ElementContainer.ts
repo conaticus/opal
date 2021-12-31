@@ -2,8 +2,7 @@ import CustomElement from "./CustomElement";
 import TextElement from "./OpalElements/Text/TextboxElement";
 import Element from "./OpalElements/Element";
 import appendCustomHtmlElement from "../util/appendCustomHtmlElement";
-import { getState } from "../util/state";
-import { addElementToState } from "../util/globals";
+import { state } from "../util/state";
 
 export default class ElementContainer extends CustomElement {
     public occupied: boolean;
@@ -71,7 +70,7 @@ export default class ElementContainer extends CustomElement {
     }
 
     public async addElement(element: Element): Promise<void> {
-        await addElementToState(element);
+        state.elements.push(element);
         appendCustomHtmlElement(this.htmlElement, element);
         this.elementAdded();
         this.occupied = true;

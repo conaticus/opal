@@ -1,7 +1,6 @@
 import TextBoxElement from "../CustomHtmlElements/OpalElements/Text/TextboxElement";
 import { ElementSave, ProjectInfo } from "../types";
-import { getElements } from "../util/globals";
-import { getState } from "../util/state";
+import { state } from "../util/state";
 import toCamel from "../util/toCamel";
 import toDashes from "../util/toDashes";
 
@@ -10,8 +9,8 @@ const apiTemplate = fsSync.readFileSync("./src/opalApiTemplate.js", "utf-8");
 const save = async (): Promise<void> => {
     document.body.style.cursor = "progress";
     
-    const projectInfo: ProjectInfo = await getState("projectInfo");
-    projectInfo.elements = [];
+    // reset all elements so we can add them back
+    state.projectInfo.elements = [];
 
     let opalSrc = `
 ${apiTemplate}
@@ -19,9 +18,7 @@ ${apiTemplate}
 export const elements = {
 `
 
-    const elements = await getElements();
-
-    elements.forEach(element => {
+    state.elements.forEach(element => {
         const elementSave = <ElementSave>{ properties: {}, propertyTypes: {} };
         elementSave.propertyTypes = element.propertyTypes;
 
@@ -30,7 +27,7 @@ export const elements = {
             elementSave.properties[propertyKey] = element.properties[propertyKey].value;
         }
 
-        projectInfo.elements.push(elementSave);
+        state.projectInfo.elements.push(elementSave);
 
         if (element.properties.identifier.value) {
             if (element instanceof TextBoxElement) {
@@ -41,8 +38,10 @@ export const elements = {
 
     opalSrc += "};";
 
-    await fs.writeFile(`${await getState("projectInfo")}/project-info.json`, JSON.stringify(projectInfo));
-    await fs.writeFile(`${await getState("projectInfo")}/src/opal.js`, opalSrc);
+    console.log(JSON.stringify(state.projectInfo, null));
+
+    await fs.writeFile(`${state.currentProjectDirectory}/project-info.json`, JSON.stringify(state.projectInfo));
+    await fs.writeFile(`${state.currentProjectDirectory}/src/opal.js`, opalSrc);
 
     setTimeout(() => {
         document.body.style.cursor = "default";

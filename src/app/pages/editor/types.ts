@@ -96,5 +96,5 @@ export interface ElementPropertyCategory {
 }
 
 export enum ElementType {
-    TextBox = "TextBoxElement",
+    TextBox = "TextboxElement",
 }

@@ -1,5 +1,4 @@
 import { OpenDialogOptions, ProjectInfo } from "../editor/types";
-import { setState } from "../editor/util/state";
 
 const form = document.getElementById("new-project-form");
 const projectDirectoryInput = <HTMLInputElement>document.getElementById("project-directory-input");
@@ -35,8 +34,8 @@ form.addEventListener("submit", async (e) => {
 
     await fs.mkdir(`${rootDir}/src`);
     await fs.writeFile(`${rootDir}/src/opal.js`, "export const elements = {};");
-    await fs.writeFile(`${rootDir}/index.js`, "");
+    await fs.writeFile(`${rootDir}/src/index.js`, "");
 
-    await setState("currentProjectDirectory", rootDir);
+    localStorage.setItem("currentProjectDirectory", rootDir);
     location.href = "../editor/index.html";
 })

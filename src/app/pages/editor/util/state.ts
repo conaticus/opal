@@ -1,7 +1,14 @@
-export const setState = async (property: string, value: any): Promise<void> => {
-    await ipc.invoke("set-state", { property, value });
+import Element from "../CustomHtmlElements/OpalElements/Element";
+import { ProjectInfo } from "../types";
+
+interface State {
+    currentProjectDirectory: string;
+    elements: Element[];
+    projectInfo: ProjectInfo;
 }
 
-export const getState = async (property: string): Promise<any> => {
-    return await ipc.invoke("get-state", property);
+export const state: State = {
+    currentProjectDirectory: localStorage.getItem("currentProjectDirectory"),
+    elements: [],
+    projectInfo: { name: "Unkown", elements: []  },
 }

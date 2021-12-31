@@ -1,6 +1,6 @@
-import TextElement from "../CustomHtmlElements/OpalElements/Text/TextboxElement";
+import TextboxElement from "../CustomHtmlElements/OpalElements/Text/TextboxElement";
 import { TextType } from "../types";
-import { getState } from "../util/state";
+import { state } from "../util/state";
 import toDashes from "../util/toDashes";
 import save from "./save";
 
@@ -8,7 +8,7 @@ const baseHTML = "<!DOCTYPE html><html lang='en'><html><head></script><script ty
 let body = "";
 const endingHTML = "</body></html>";
 
-const appendTextElementSource = (element: TextElement): void => {
+const appendTextElementSource = (element: TextboxElement): void => {
     let elementType: string;
     switch (element.properties.type.value.currentChoice) {
         case TextType.HEADING_ONE:
@@ -34,19 +34,18 @@ const appendTextElementSource = (element: TextElement): void => {
             break;
         default: return;
     }
-
+    
     body += `<${elementType} id=${toDashes(element.properties.identifier.value)} style=\"font-weight: ${String(element.properties.weight.value.currentChoice)};${element.properties.size.value ? `font-size: ${element.properties.size.value}px;` : ''}\">${element.properties.text.value}</${elementType}>` 
 }
 
 const build = async (): Promise<void> => {
     await save();
-    const elements: Element[] = await getState("elements");
     
-    elements.forEach(element => {
-        if (element instanceof TextElement) appendTextElementSource(element);
+    state.elements.forEach(element => {
+        if (element instanceof TextboxElement) appendTextElementSource(element);
     })
 
-    await fs.writeFile(`${await getState("currentProjectDirectory")}/index.html`, baseHTML + body + endingHTML);
+    await fs.writeFile(`${state.currentProjectDirectory}/index.html`, baseHTML + body + endingHTML);
     body = "";
 }
 

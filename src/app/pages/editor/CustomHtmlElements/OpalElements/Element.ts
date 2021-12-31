@@ -1,6 +1,6 @@
 import { ElementProperties, ElementProperty, ElementPropertyType, ElementPropertyTypes, ElementSave, ElementType } from "../../types";
 import CustomElement from "../CustomElement";
-import TextBoxElement from "./Text/TextboxElement";
+import TextboxElement from "./Text/TextboxElement";
 
 export default abstract class Element extends CustomElement {
     public properties: ElementProperties;
@@ -19,7 +19,7 @@ export default abstract class Element extends CustomElement {
         let element: Element;
         switch (elementSave.type) {
             case ElementType.TextBox:
-                element = new TextBoxElement();
+                element = new TextboxElement();
                 break;
             default:
                 throw new Error(`Could not find element with given type '${elementSave.type}'.`);
