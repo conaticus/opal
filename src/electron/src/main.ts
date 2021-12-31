@@ -26,8 +26,6 @@ const createWindow = (): void => {
 app.once("ready", () => {
     createWindow();
 
-    globalShortcut.unregister("CommandOrControl+R");
-
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
     })

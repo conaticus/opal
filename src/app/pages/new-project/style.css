@@ -1,0 +1,50 @@
+body {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    user-select: none;
+    overflow: hidden;
+    font-family: 'Lato', sans-serif;
+    background-color: rgb(0, 0, 31);
+    color: white;
+    padding: 20px;
+}
+
+input {
+    outline: none;
+    border: none;
+    width: 300px;
+    height: 40px;
+    padding: 0 5px;
+    font-size: 16px;
+    border-radius: 5px;
+}
+
+h3 {
+    font-size: 25px;
+    padding: 0;
+    margin: 15px 0;
+}
+
+button {
+    width: 250px;
+    outline: none;
+    border: none;
+    border-radius: 5px;
+    margin: 0px 10px;
+    font-size: 20px;
+    background-color: white;
+    cursor: pointer;
+    font-family: 'Lato', sans-serif;
+    margin: 0;
+}
+
+#project-dir-dialog-button {
+    width: 40px;
+    height: 40px;
+}
+
+.submit-button {
+    margin-top: 20px;
+    height: 50px;
+}
