@@ -9,10 +9,10 @@ import "./scripts/save";
 import "./scripts/build";
 
 const loadEditor = async (): Promise<void> => {
+    createElementContainer();
     await load();
 
     createSidenav();
-    createElementContainer();
 
     attatchEventListeners();
     attachIpcListeners();

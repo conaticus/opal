@@ -1,4 +1,5 @@
 import { state } from "../util/state";
+import build from "./build";
 
 const attatchIpcListeners = (): void => {
     ipc.on("open-menu", () => {
@@ -9,7 +10,8 @@ const attatchIpcListeners = (): void => {
         location.href = "../new-project/index.html";
     })
 
-    ipc.on("preview-site", () => {
+    ipc.on("preview-site", async () => {
+        await build();
         shell.openExternal("http://localhost:8080");
     })
 

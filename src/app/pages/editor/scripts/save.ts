@@ -38,8 +38,6 @@ export const elements = {
 
     opalSrc += "};";
 
-    console.log(JSON.stringify(state.projectInfo, null));
-
     await fs.writeFile(`${state.currentProjectDirectory}/project-info.json`, JSON.stringify(state.projectInfo));
     await fs.writeFile(`${state.currentProjectDirectory}/src/opal.js`, opalSrc);
 

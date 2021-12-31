@@ -35,7 +35,7 @@ const appendTextElementSource = (element: TextboxElement): void => {
         default: return;
     }
     
-    body += `<${elementType} id=${toDashes(element.properties.identifier.value)} style=\"font-weight: ${String(element.properties.weight.value.currentChoice)};${element.properties.size.value ? `font-size: ${element.properties.size.value}px;` : ''}\">${element.properties.text.value}</${elementType}>` 
+    body += `<${elementType} id="${toDashes(element.properties.identifier.value)}" style=\"font-weight: ${String(element.properties.weight.value.currentChoice)};${element.properties.size.value ? `font-size: ${element.properties.size.value}px;` : ''}\">${element.properties.text.value}</${elementType}>` 
 }
 
 const build = async (): Promise<void> => {

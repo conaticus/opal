@@ -26,6 +26,17 @@ const createElementContainer = (): void => {
 
         showElementInspector(elementInspector);
 
+        // Doing it like this allows the user to click inside the widget container
+        elementContainer.htmlElement.addEventListener("mouseenter", () => {
+            onclick = () => {
+                showElementInspector(elementInspector);
+            }
+        })
+
+        elementContainer.htmlElement.addEventListener("mouseleave", () => {
+            onclick = () => {};
+        })
+
         elementContainer.htmlElement.addEventListener("click", () => {
             showElementInspector(elementInspector);
         })
@@ -36,7 +47,5 @@ const createElementContainer = (): void => {
         createElementContainer();
     })
 }
-
-createElementContainer();
 
 export { elementContainers, createElementContainer };

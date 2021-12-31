@@ -11,8 +11,6 @@ const load = async (): Promise<void> => {
 
     document.title = `Opal - ${projectInfo.name}`;
 
-    console.log(state.projectInfo.elements);
-
     state.projectInfo.elements.forEach(async (element) => {
         const elementContainer = new ElementContainer(elementContainers.lastChild as HTMLDivElement);
         const generatedWidget = Element.generateFromSave(element);
