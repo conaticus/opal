@@ -56,6 +56,11 @@ export interface TextElementProperties extends ElementProperties {
     resizeToType: ElementProperty<boolean>;
 }
 
+export interface ContainerElementProperties extends ElementProperties {
+    padding: ElementProperty<number>;
+}
+
+
 export interface ElementSave {
     type: string;
     properties: any;

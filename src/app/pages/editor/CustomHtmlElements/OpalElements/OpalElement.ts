@@ -2,21 +2,21 @@ import { ElementProperties, ElementProperty, ElementPropertyType, ElementPropert
 import CustomElement from "../CustomElement";
 import TextboxElement from "./Text/TextboxElement";
 
-export default abstract class Element extends CustomElement {
+export default abstract class OpalElement extends CustomElement {
     public properties: ElementProperties;
 
     constructor(type: string = "div", public propertyTypes: ElementPropertyTypes) {
         super(type);
         this.properties = {};
-        this.propertyTypes.identifier = { type: ElementPropertyType.TEXT_SHORT, category: { label: "Element Settings", priority: 1 } };
+        this.propertyTypes.identifier = { type: ElementPropertyType.TEXT_SHORT, category: { label: "Element Settings", priority: 0 } };
 
         this.initialiseProperties();
 
         this.properties.identifier.handleInspectorChange = (value: string) => this.properties.identifier.value = value;
     }
 
-    static generateFromSave(elementSave: ElementSave): Element {
-        let element: Element;
+    static generateFromSave(elementSave: ElementSave): OpalElement {
+        let element: OpalElement;
         switch (elementSave.type) {
             case ElementType.TextBox:
                 element = new TextboxElement();

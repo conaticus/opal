@@ -1,16 +1,16 @@
 import { ElementPropertyCategory, ElementPropertyType, ElementPropertyTypes, FontWeight, TextElementProperties, TextType } from "../../../types";
-import Element from "../Element";
+import OpalElement from "../OpalElement";
 
 const DEFAULT_TEXT_SIZE = 18;
 
-export default class TextboxElement extends Element {
+export default class TextboxElement extends OpalElement {
     properties: TextElementProperties;
     htmlElement: HTMLDivElement;
 
     constructor() {
-        const generalCategory: ElementPropertyCategory = { label: "General", priority: 2 };
-        const typographyCategory: ElementPropertyCategory = { label: "Typography", priority: 3 };
-        const seoCategory: ElementPropertyCategory = { label: "SEO", priority: 4 };
+        const generalCategory: ElementPropertyCategory = { label: "General", priority: 1 };
+        const typographyCategory: ElementPropertyCategory = { label: "Typography", priority: 2 };
+        const seoCategory: ElementPropertyCategory = { label: "SEO", priority: 3 };
 
         const propertyTypes: ElementPropertyTypes = {
             text: {

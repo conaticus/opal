@@ -1,5 +1,5 @@
 import CustomElement from "./CustomElement";
-import Element from "./OpalElements/Element";
+import OpalElement from "./OpalElements/OpalElement";
 import handleInspectorChange from "../util/handleInspectorChange";
 import camelToCapitalised from "../util/camelToCapitalised";
 import { ElementProperty, ElementPropertyChoice, ElementPropertyType } from "../types";
@@ -22,7 +22,7 @@ const MIN_TEXT_SIZE = "1";
 const MAX_TEXT_SIZE = "100";
 
 export default class ElementInspector extends CustomElement {
-    constructor(private opalElement: Element) {
+    constructor(private opalElement: OpalElement) {
         super();
         this.htmlElement.className = "element-inspector";
 
