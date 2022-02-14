@@ -14,7 +14,7 @@ Opal interprets all configurations and scripts and generates optimised website c
 - Clone/pull the repository locally
 - Enter the main directory in terminal (the directory including the `README.md`)
 - `npm i` - install dependencies
-- `npx compile-electron` - compile the electron source code - run this when first installing and when updating the electron source code
+- `npm run compile-electron` - compile the electron source code - run this when first installing and when updating the electron source code
 - `npm start` - start the application
 
 ## What makes Opal unique
