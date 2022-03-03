@@ -1,5 +1,5 @@
 import IconButton from "../CustomHtmlElements/IconButton";
-import AddElementMenu from "../CustomHtmlElements/Menus/AddElementMenu";
+import AddWidgetMenu from "../CustomHtmlElements/Menus/AddWidgetMenu";
 import SidenavMenu from "../CustomHtmlElements/Menus/Menu";
 import appendCustomHtmlElement from "../util/appendCustomHtmlElement";
 
@@ -15,13 +15,13 @@ const createSidenav = (): void => {
     const main = document.getElementsByTagName("main").item(0);
     const preview = document.getElementById("preview");
 
-    const addElementMenu = new AddElementMenu();
-    main.insertBefore(addElementMenu.htmlElement, preview);
+    const addWidgetMenu = new AddWidgetMenu();
+    main.insertBefore(addWidgetMenu.htmlElement, preview);
 
     const sidenavButtons: SidenavButton[] = [
         {
             svgSrc: "./icons/Plus.svg",
-            menu: addElementMenu,
+            menu: addWidgetMenu,
         },
         {
             svgSrc: "./icons/Alert.svg",
@@ -35,15 +35,15 @@ const createSidenav = (): void => {
             svgSrc: "./icons/Page.svg",
             menu: new SidenavMenu("Menu"),
         },
-    ]
+    ];
 
     const closeAllSidenavMenus = () => {
         sidenavButtons.forEach((sidenavButton, idx) => {
             sidenavButton.container.style.backgroundColor = "#404040";
             sidenavButton.menu.close();
             sidenavButtons[idx].isToggled = false;
-        })
-    }
+        });
+    };
 
     const toggleSidenavButton = (buttonIndex: number) => {
         const sidenavButton = sidenavButtons[buttonIndex];
@@ -56,8 +56,9 @@ const createSidenav = (): void => {
             sidenavButton.menu.open();
         }
 
-        sidenavButtons[buttonIndex].isToggled = !sidenavButtons[buttonIndex].isToggled;
-    }
+        sidenavButtons[buttonIndex].isToggled =
+            !sidenavButtons[buttonIndex].isToggled;
+    };
 
     sidenavButtons.forEach((sidenavButton, idx) => {
         const buttonContainer = document.createElement("div");
@@ -77,11 +78,15 @@ const createSidenav = (): void => {
         //     button.element.style.fill = "#D0D0D0";
         // })
 
-        buttonContainer.addEventListener("click", () => toggleSidenavButton(idx));
-        sidenavButton.menu.htmlElement.addEventListener("close", () => toggleSidenavButton(idx));
+        buttonContainer.addEventListener("click", () =>
+            toggleSidenavButton(idx)
+        );
+        sidenavButton.menu.htmlElement.addEventListener("close", () =>
+            toggleSidenavButton(idx)
+        );
 
         sidenav.appendChild(buttonContainer);
-    })
-}
+    });
+};
 
 export default createSidenav;

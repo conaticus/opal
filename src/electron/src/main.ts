@@ -1,9 +1,9 @@
-import { app, BrowserWindow, globalShortcut, Menu, nativeTheme } from "electron";
+import { app, BrowserWindow, Menu, nativeTheme } from "electron";
 import menu from "./menu";
 import * as path from "path";
 import attatchIpcListeners from "./attachIpcListeners";
 
-process.env['ELECTRON_DISABLE_SECURITY_WARNINGS'] = 'true'
+process.env["ELECTRON_DISABLE_SECURITY_WARNINGS"] = "true";
 
 nativeTheme.themeSource = "light";
 Menu.setApplicationMenu(menu);
@@ -13,7 +13,6 @@ const createWindow = (): void => {
         width: 800,
         height: 600,
         fullscreen: true,
-        resizable: false,
         webPreferences: {
             preload: path.join(__dirname, "./preload.js"),
         },
@@ -21,16 +20,16 @@ const createWindow = (): void => {
 
     win.loadFile("../../app/pages/menu/index.html");
     attatchIpcListeners();
-}
+};
 
 app.once("ready", () => {
     createWindow();
 
     app.on("activate", () => {
         if (BrowserWindow.getAllWindows().length === 0) createWindow();
-    })
-})
+    });
+});
 
 app.on("window-all-closed", () => {
     if (process.platform !== "darwin") app.quit();
-})
+});

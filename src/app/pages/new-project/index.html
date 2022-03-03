@@ -1,23 +1,33 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Opal</title>
-    <link rel="stylesheet" href="./style.css">
-</head>
-<body>
-    <h1>New Project</h1>
-    <form id="new-project-form">
-        <h3>Project Name</h3>
-        <input id="project-name-input" required type="text" placeholder="My Project">
-        <h3>Project Path</h3>
-        <input id="project-directory-input" required type="text" placeholder="C:\Users\someuser\Documents\My Project">
-        <button id="project-dir-dialog-button">...</button> <br>
-        <button class="submit-button" type="submit">Create Project</button>
-    </form>
+    <head>
+        <meta charset="UTF-8" />
+        <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Opal</title>
+        <link rel="stylesheet" href="./style.css" />
+    </head>
+    <body>
+        <h1>New Project</h1>
+        <form id="new-project-form">
+            <h3>Project Name</h3>
+            <input
+                id="project-name-input"
+                required
+                type="text"
+                placeholder="My Project"
+            />
+            <h3>Project Path</h3>
+            <input
+                id="project-directory-input"
+                required
+                type="text"
+                placeholder="C:\Users\someuser\Documents\My Project"
+            />
+            <button id="project-dir-dialog-button">...</button> <br />
+            <button class="submit-button" type="submit">Create Project</button>
+        </form>
 
-    <script src="../../build/new-project.js"></script>
-</body>
+        <script src="../../build/new-project.js"></script>
+    </body>
 </html>

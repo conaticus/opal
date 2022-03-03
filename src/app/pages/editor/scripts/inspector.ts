@@ -1,35 +1,38 @@
-import ElementInspector from "../CustomHtmlElements/ElementInspector";
+import WidgetInspector from "../CustomHtmlElements/WidgetInspector";
 import Menu from "../CustomHtmlElements/Menus/Menu";
-import ContainerElement, { elementContainers } from "../CustomHtmlElements/OpalElements/Layout/ContainerElement";
-import OpalElement from "../CustomHtmlElements/OpalElements/OpalElement";
+import ContainerWidget from "../CustomHtmlElements/Widgets/Layout/ContainerWidget";
+import Widget from "../CustomHtmlElements/Widgets/Widget";
 import appendCustomHtmlElement from "../util/appendCustomHtmlElement";
 
 const inspector = new Menu("No element selected", false);
-appendCustomHtmlElement(document.getElementsByTagName("main").item(0), inspector);
+appendCustomHtmlElement(
+    document.getElementsByTagName("main").item(0),
+    inspector
+);
 
-const elementInspectors: ElementInspector[] = [];
+const widgetInspectors: WidgetInspector[] = [];
 
-const showElementInspector = (elementInspector: ElementInspector) => {
-    elementInspectors.forEach(elInspector => {
-        elInspector.htmlElement.style.display = "none";
-    })
+const showWidgetInspector = (widgetInspector: WidgetInspector) => {
+    widgetInspectors.forEach((wInspector) => {
+        wInspector.htmlElement.style.display = "none";
+    });
 
-    elementInspector.htmlElement.style.display = "block";
-}
+    widgetInspector.htmlElement.style.display = "block";
+};
 
-const createInspector = (element: OpalElement, elementContainer: ContainerElement) => {
-    const elementInspector = new ElementInspector(element);
-    elementInspectors.push(elementInspector);
+const createInspector = (widget: Widget) => {
+    const widgetInspector = new WidgetInspector(widget);
+    widgetInspectors.push(widgetInspector);
 
-    showElementInspector(elementInspector);
+    showWidgetInspector(widgetInspector);
 
-    element.htmlElement.addEventListener("click", () => {
-        showElementInspector(elementInspector);
-    })
+    widget.htmlElement.addEventListener("click", () => {
+        showWidgetInspector(widgetInspector);
+    });
 
-    inspector.titleText = element.constructor.name;
+    inspector.titleText = widget.constructor.name;
 
-    appendCustomHtmlElement(inspector.htmlElement, elementInspector);
-}
+    appendCustomHtmlElement(inspector.htmlElement, widgetInspector);
+};
 
 export { inspector, createInspector };

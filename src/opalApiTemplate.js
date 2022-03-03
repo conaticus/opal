@@ -1,6 +1,6 @@
 export const CursorTypes = {
     POINTER: "pointer",
-}
+};
 
 export class Element {
     constructor(id) {

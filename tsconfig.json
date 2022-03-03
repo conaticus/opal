@@ -1,10 +1,11 @@
 {
-  "compilerOptions": {
-    "outDir": "./build/",
-    "target": "ES2021",
-    "noImplicitAny": true,
-    "module": "es6",
-    "allowJs": true,
-    "moduleResolution": "node",
-  }
+    "compilerOptions": {
+        "outDir": "./build/",
+        "target": "ES2021",
+        "noImplicitAny": true,
+        "allowJs": true,
+        "module": "commonjs",
+        "moduleResolution": "node"
+    },
+    "include": ["src/**/*"]
 }

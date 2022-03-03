@@ -1,21 +1,21 @@
 import { IpcRenderer } from "electron";
-import * as filesystem from "fs/promises";
-import * as filesystemSync from "fs";
+import * as filesys from "fs/promises";
+import * as filesysSync from "fs";
 import { shell as sh } from "electron";
 
 export type { OpenDialogOptions } from "electron";
 
 declare global {
     const ipc: IpcRenderer;
-    const fs: typeof filesystem;
-    const fsSync: typeof filesystemSync;
+    const fs: typeof filesys;
+    const fsSync: typeof filesysSync;
     const shell: {
         openExternal: typeof sh.openExternal;
         showItemInFolder: typeof sh.showItemInFolder;
-    }
+    };
 }
 
-export enum ElementPropertyType {
+export enum WidgetPropertyType {
     TEXT_SHORT,
     TEXT_EDITABLE,
     CHOICE,
@@ -23,45 +23,44 @@ export enum ElementPropertyType {
     BOOLEAN,
 }
 
-export interface ElementPropertyTypes {
+export interface WidgetPropertyTypes {
     [key: string]: {
-        type: ElementPropertyType;
-        category: ElementPropertyCategory;
+        type: WidgetPropertyType;
+        category: WidgetPropertyCategory;
         choiceEnum?: any;
     };
 }
 
-export interface ElementPropertyChoice {
+export interface WidgetPropertyChoice {
     currentChoice?: string;
     choiceEnum: any;
 }
 
-export interface ElementProperty<ValueType> {
+export interface WidgetProperty<ValueType> {
     value?: ValueType;
     disabled: boolean;
-    category: ElementPropertyCategory;
+    category: WidgetPropertyCategory;
     handleInspectorChange?: Function;
 }
 
-export interface ElementProperties {
-    [key: string]: ElementProperty<any>;
-    identifier?: ElementProperty<string>;
+export interface WidgetProperties {
+    [key: string]: WidgetProperty<any>;
+    identifier?: WidgetProperty<string>;
 }
 
-export interface TextElementProperties extends ElementProperties {
-    text: ElementProperty<string>;
-    type: ElementProperty<ElementPropertyChoice>;
-    size: ElementProperty<number>;
-    weight: ElementProperty<ElementPropertyChoice>;
-    resizeToType: ElementProperty<boolean>;
+export interface TextWidgetProperties extends WidgetProperties {
+    text: WidgetProperty<string>;
+    type: WidgetProperty<WidgetPropertyChoice>;
+    size: WidgetProperty<number>;
+    weight: WidgetProperty<WidgetPropertyChoice>;
+    resizeToType: WidgetProperty<boolean>;
 }
 
-export interface ContainerElementProperties extends ElementProperties {
-    padding: ElementProperty<number>;
+export interface ContainerWidgetProperties extends WidgetProperties {
+    padding: WidgetProperty<number>;
 }
 
-
-export interface ElementSave {
+export interface WidgetSave {
     type: string;
     properties: any;
     propertyTypes: any;
@@ -70,7 +69,7 @@ export interface ElementSave {
 export interface ProjectInfo {
     name: string;
     isOpal?: boolean;
-    elements: ElementSave[]
+    widgets: WidgetSave[];
 }
 
 export enum TextType {
@@ -92,14 +91,14 @@ export enum FontWeight {
     SIX_HUNDRED = "600",
     SEVEN_HUNDRED = "700",
     EIGHT_HUNDRED = "800",
-    NINE_HUNDRED = "900"
+    NINE_HUNDRED = "900",
 }
 
-export interface ElementPropertyCategory {
+export interface WidgetPropertyCategory {
     label: string;
     priority: number;
 }
 
-export enum ElementType {
-    TextBox = "TextboxElement",
+export enum WidgetType {
+    TextBox = "TextboxWidget",
 }

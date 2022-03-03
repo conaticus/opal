@@ -4,11 +4,11 @@
     align-items: center;
 }
 
-.element-inspector-child {
+.widget-inspector-child {
     margin: 15px auto;
 }
 
-.element-inspector textarea {
+.widget-inspector textarea {
     resize: none;
     outline: none;
 }

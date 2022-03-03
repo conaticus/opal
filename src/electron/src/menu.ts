@@ -1,8 +1,13 @@
-import { BrowserWindow, ipcMain, Menu, MenuItemConstructorOptions } from "electron";
+import {
+    BrowserWindow,
+    ipcMain,
+    Menu,
+    MenuItemConstructorOptions,
+} from "electron";
 
 const focusedWindowSend = (channel: string) => {
     BrowserWindow.getFocusedWindow().webContents.send(channel);
-}
+};
 
 const menuTemplate: MenuItemConstructorOptions[] = [
     {
@@ -13,57 +18,57 @@ const menuTemplate: MenuItemConstructorOptions[] = [
                 accelerator: "Ctrl+N",
                 click: () => {
                     focusedWindowSend("new-project");
-                }
+                },
             },
             {
                 label: "Save",
                 accelerator: "Ctrl+S",
                 click: () => {
                     focusedWindowSend("save");
-                }
+                },
             },
             {
                 label: "Build",
                 accelerator: "Ctrl+B",
                 click: () => {
                     focusedWindowSend("build");
-                }
+                },
             },
             {
                 label: "Open",
-                accelerator: "Ctrl+O"
+                accelerator: "Ctrl+O",
             },
             {
                 label: "Open Project Directory",
                 click: () => {
                     focusedWindowSend("open-project-directory");
-                }
+                },
             },
             {
                 label: "Preview Site",
                 accelerator: "Ctrl+P",
                 click: () => {
                     focusedWindowSend("preview-site");
-                }
+                },
             },
             {
                 label: "Settings",
-                accelerator: "Shift+,"
+                accelerator: "Shift+,",
             },
-        ]
+        ],
     },
     {
         label: "Developer",
         submenu: [
             {
                 label: "Inspect Element",
-                role: "toggleDevTools"
+                role: "toggleDevTools",
             },
             {
                 label: "Reload Page",
-                role: "reload"
-            }
-        ]
+                role: "reload",
+            },
+        ],
     },
     {
         label: "Opal",
@@ -72,19 +77,19 @@ const menuTemplate: MenuItemConstructorOptions[] = [
                 label: "Menu",
                 click: () => {
                     focusedWindowSend("open-menu");
-                }
+                },
             },
             {
                 label: "Settings",
-                accelerator: "Ctrl+,"
+                accelerator: "Ctrl+,",
             },
             {
                 label: "Exit",
-                role: "close"
-            }
-        ]
+                role: "close",
+            },
+        ],
     },
-]
+];
 
 const menu = Menu.buildFromTemplate(menuTemplate);
 
